@@ -1,12 +1,23 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/common.css') }}">
+</head>
+<body>
+<div id="page-wrepper">
+    <div id="header-wrepper">
+        <div class="container1">
+            {% include 'inc/header.html.twig' %}
+        </div>
+    </div>
+
+    <main>
+        {% block main %}s{% endblock %}
+    </main>
+
+    {% include 'inc/footer.html.twig' %}
+</div>
+</body>
 </html>
