@@ -1,0 +1,27 @@
+<header id="header">
+    <div class="inner">
+        <h1 id="logo">Kvestroom</h1>
+        <nav id="nav">
+            <ul>
+                <li><a href="#">Головна</a></li>
+{#                @if(Request::is('/')) <li class="current_page_item"><a href="{{ route('home') }}">Головна</a></li>#}
+{#                @else <li><a href="{{ route('home') }}">Головна</a></li> @endif#}
+
+{#                @if(Request::is('kvestroom_list')) <li class="current_page_item"><a href="{{ route('kvestroom_list') }}">Квест кімнати</a></li>#}
+{#                @else <li><a href="{{ route('kvestroom_list') }}">Квест кімнати</a></li> @endif#}
+                <li><a href="#">Квест кімнати</a></li>
+{#                @if(Request::is('contact')) <li class="current_page_item"><a href="{{ route('contact') }}">Контакти</a></li>#}
+{#                @else <li><a href="{{ route('contact') }}">Контакти</a></li> @endif#}
+                <li><a href="#">Контакти</a></li>
+{#                @if(Auth::check())#}
+{#                @if(Request::is('profile')) <li class="current_page_item"><a href="{{ route('profile') }}">Профіль</a></li>#}
+{#                @else <li><a href="{{ route('profile') }}">Профіль</a></li> @endif#}
+{#                @else#}
+{#                @if(Request::is('login')) <li class="current_page_item"><a href="{{ route('login') }}">Уійти</a></li>#}
+{#                @else <li><a href="{{ route('login') }}">Уійти</a></li> @endif#}
+{#                @endif#}
+                <li><a href="#">Уійти</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
