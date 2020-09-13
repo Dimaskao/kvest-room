@@ -12,16 +12,14 @@ final class Room
     private int $id;
     private string $name;
     private string $image;
-    private string $description;
-    private string $peopleAndTimeInfo;
+    private ?string $description = null;
+    private ?string $peopleAndTimeInfo = null;
 
-    public function __construct(int $id, string $name, string $image, string $description, string $peopleAndTimeInfo)
+    public function __construct(int $id, string $name, string $image)
     {
         $this->id = $id;
         $this->name = $name;
         $this->image = $image;
-        $this->description = $description;
-        $this->peopleAndTimeInfo = $peopleAndTimeInfo;
     }
 
     public function getId(): int

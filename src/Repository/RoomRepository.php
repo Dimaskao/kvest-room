@@ -19,5 +19,12 @@ class RoomRepository extends ServiceEntityRepository
         parent::__construct($registry, Room::class);
     }
 
+    public function getRoomList(): array
+    {
+        $query = $this->createQueryBuilder('r')
+            ->select('r.id', 'r.name', 'r.image')
+            ->getQuery();
 
+        return $query->getResult();
+    }
 }
