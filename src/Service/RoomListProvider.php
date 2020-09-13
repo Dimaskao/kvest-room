@@ -27,6 +27,7 @@ class RoomListProvider implements RoomListProviderInterface
         foreach ($result as $room) {
             $roomList[] = new Room($room['id'], $room['name'], $room['image']);
         }
+
         return new RoomList($roomList);
     }
 }

@@ -12,7 +12,6 @@ final class RoomFixture extends AbstractFixture
 
     public function load(ObjectManager $manager)
     {
-
         for ($i = 0; $i < self::ROOMS_COUNT; ++$i) {
             $manager->persist($this->createRoom($i + 1));
         }
