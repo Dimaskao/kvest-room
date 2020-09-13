@@ -14,7 +14,7 @@ use Faker\Generator;
  */
 class RoomListFakeProvider implements RoomListProviderInterface
 {
-    private const ROOMLIST_COUNT = 6;
+    private const ROOMS_COUNT = 6;
     private const PEOPLE_AND_TIME_INFO = '2-4|60';
 
     private Generator $faker;
@@ -28,7 +28,7 @@ class RoomListFakeProvider implements RoomListProviderInterface
     {
         $roomList = [];
 
-        for ($i = 0; $i < self::ROOMLIST_COUNT; ++$i) {
+        for ($i = 0; $i < self::ROOMS_COUNT; ++$i) {
             $roomList[] = $this->createRoom($i + 1);
         }
 

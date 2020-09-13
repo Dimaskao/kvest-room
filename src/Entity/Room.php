@@ -37,6 +37,15 @@ class Room
      */
     private string $peopleAndTimeInfo;
 
+    public function __construct(int $id, string $name, string $image, string $description, string $peopleAndTimeInfo)
+    {
+        $this->id = $id;
+        $this->name = $name;
+        $this->image = $image;
+        $this->description = $description;
+        $this->peopleAndTimeInfo = $peopleAndTimeInfo;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
