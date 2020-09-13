@@ -5,7 +5,7 @@
 1. Clone repository
 
     ```sh
-    $ git clone git@github.com:ITEA-PHP-Advanced/ITEA-PHP-Adv7_News-Portal.git
+    $ git clone https://github.com/Dimaskao/kvest-room.git
     ```
 2. Install dependencies
 
