@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Квест кімнати{% endblock %}
+
+{% block main %}
+<div id="banner">
+    <h2>Квест кімнати</h2>
+    <span class="opus">Ми пропонуемо вам найкращі квест кімнати столиці! Уважно прочитайте про них та зробіть свій вибір.<br>Гарної гри!</span>
+</div>
+<div class="wrapper style1">
+    <div class="inner">
+        <section class="container box feature1">
+            <div class="row">
+{#                foreach#}
+                <div class="row-item">
+                    <div class="kvestroom">Алхімік</div>
+                    <a href="#{#path to room#}">
+                        <section class="img">
+                            <img src="{{ asset('/images/alchemist.jpg') }}">
+                        </section>
+                    </a>
+                </div>
+{#                endfor#}
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

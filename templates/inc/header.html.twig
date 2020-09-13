@@ -3,13 +3,13 @@
         <h1 id="logo">Kvestroom</h1>
         <nav id="nav">
             <ul>
-                <li><a href="#">Головна</a></li>
+                <li><a href="{{ path('app_home') }}">Головна</a></li>
 {#                @if(Request::is('/')) <li class="current_page_item"><a href="{{ route('home') }}">Головна</a></li>#}
 {#                @else <li><a href="{{ route('home') }}">Головна</a></li> @endif#}
 
 {#                @if(Request::is('kvestroom_list')) <li class="current_page_item"><a href="{{ route('kvestroom_list') }}">Квест кімнати</a></li>#}
 {#                @else <li><a href="{{ route('kvestroom_list') }}">Квест кімнати</a></li> @endif#}
-                <li><a href="#">Квест кімнати</a></li>
+                <li><a href="{{ path('app_rooms') }}">Квест кімнати</a></li>
 {#                @if(Request::is('contact')) <li class="current_page_item"><a href="{{ route('contact') }}">Контакти</a></li>#}
 {#                @else <li><a href="{{ route('contact') }}">Контакти</a></li> @endif#}
                 <li><a href="#">Контакти</a></li>
