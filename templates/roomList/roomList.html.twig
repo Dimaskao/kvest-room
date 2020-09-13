@@ -11,16 +11,16 @@
     <div class="inner">
         <section class="container box feature1">
             <div class="row">
-{#                foreach#}
+                {% for room in roomList.roomList %}
                 <div class="row-item">
-                    <div class="kvestroom">Алхімік</div>
-                    <a href="#{#path to room#}">
+                    <div class="kvestroom">{{ room.name }}</div>
+                    <a href="#">
                         <section class="img">
-                            <img src="{{ asset('/images/alchemist.jpg') }}">
+                            <img src="{{ room.image }}">
                         </section>
                     </a>
                 </div>
-{#                endfor#}
+                {% endfor %}
             </div>
         </section>
     </div>

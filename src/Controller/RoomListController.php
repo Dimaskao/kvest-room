@@ -28,6 +28,8 @@ class RoomListController extends AbstractController
     {
         $roomList = $this->roomListProvider->getRoomList();
 
-        return $this->render('roomList/roomList.html.twig');
+        return $this->render('roomList/roomList.html.twig', [
+            'roomList' => $roomList,
+        ]);
     }
 }
