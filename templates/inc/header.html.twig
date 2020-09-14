@@ -3,16 +3,24 @@
         <h1 id="logo">Kvestroom</h1>
         <nav id="nav">
             <ul>
-                <li><a href="{{ path('app_home') }}">Головна</a></li>
-{#                @if(Request::is('/')) <li class="current_page_item"><a href="{{ route('home') }}">Головна</a></li>#}
-{#                @else <li><a href="{{ route('home') }}">Головна</a></li> @endif#}
+                {% set uri =  app.request.requestUri  %}
 
-{#                @if(Request::is('kvestroom_list')) <li class="current_page_item"><a href="{{ route('kvestroom_list') }}">Квест кімнати</a></li>#}
-{#                @else <li><a href="{{ route('kvestroom_list') }}">Квест кімнати</a></li> @endif#}
-                <li><a href="{{ path('app_rooms') }}">Квест кімнати</a></li>
+                {% if  uri  == '/' %}
+                    <li class="current_page_item"><a href="{{ path('app_home') }}">Головна</a></li>
+                {% else %}
+                    <li><a href="{{ path('app_home') }}">Головна</a></li>
+                {% endif %}
+
+                {% if  uri  == '/rooms' %}
+                    <li class="current_page_item"><a href="{{ path('app_rooms') }}">Квест кімнати</a></li>
+                {% else %}
+                    <li><a href="{{ path('app_rooms') }}">Квест кімнати</a></li>
+                {% endif %}
+
 {#                @if(Request::is('contact')) <li class="current_page_item"><a href="{{ route('contact') }}">Контакти</a></li>#}
 {#                @else <li><a href="{{ route('contact') }}">Контакти</a></li> @endif#}
                 <li><a href="#">Контакти</a></li>
+
 {#                @if(Auth::check())#}
 {#                @if(Request::is('profile')) <li class="current_page_item"><a href="{{ route('profile') }}">Профіль</a></li>#}
 {#                @else <li><a href="{{ route('profile') }}">Профіль</a></li> @endif#}
