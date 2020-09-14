@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Collection;
 
 /**
@@ -7,7 +9,7 @@ namespace App\Collection;
  *
  * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
  */
-class RoomList
+final class RoomList
 {
     private array $roomList;
 
