@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\Collection\RoomList;
-use App\DTO\Room;
+use App\DTO\RoomDTO;
 use App\Repository\RoomRepository;
 
 /**
@@ -25,7 +27,7 @@ class RoomListProvider implements RoomListProviderInterface
         $result = $this->roomRepository->getRoomList();
         $roomList = [];
         foreach ($result as $room) {
-            $roomList[] = new Room($room['id'], $room['name'], $room['image']);
+            $roomList[] = new RoomDTO($room['id'], $room['name'], $room['image']);
         }
 
         return new RoomList($roomList);

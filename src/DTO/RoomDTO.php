@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DTO;
 
 /**
@@ -7,7 +9,7 @@ namespace App\DTO;
  *
  * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
  */
-final class Room
+final class RoomDTO
 {
     private int $id;
     private string $name;
@@ -37,13 +39,23 @@ final class Room
         return $this->image;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
-        return $this->description;
+        return $this->description ?? null;
     }
 
-    public function getPeopleAndTimeInfo(): array
+    public function getPeopleAndTimeInfo(): ?array
     {
-        return \explode('|', $this->peopleAndTimeInfo);
+        return \explode('|', $this->peopleAndTimeInfo) ?? null;
+    }
+
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+
+    public function setPeopleAndTimeInfo(?string $peopleAndTimeInfo): void
+    {
+        $this->peopleAndTimeInfo = $peopleAndTimeInfo;
     }
 }

@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Room;
+use App\Exception\EntityNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -23,8 +26,26 @@ class RoomRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('r')
             ->select('r.id', 'r.name', 'r.image')
+            ->where('r.available = true')
             ->getQuery();
 
         return $query->getResult();
+    }
+
+    public function getRoomFromDB($id): Room
+    {
+        $query = $this->createQueryBuilder('r')
+            ->where('r.id = :id')
+            ->andWhere('r.available = true')
+            ->setParameter('id', $id)
+            ->getQuery();
+
+        $room = $query->getOneOrNullResult();
+
+        if (null === $room) {
+            throw new EntityNotFoundException('Room', $id);
+        }
+
+        return $room;
     }
 }
