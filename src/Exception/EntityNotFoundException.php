@@ -6,7 +6,7 @@ namespace App\Exception;
 
 class EntityNotFoundException extends \RuntimeException
 {
-    public function __construct(string $entityName, int $id)
+    public function __construct(string $entityName, $id)
     {
         $message = \sprintf('Entity "%s" with ID %d not found.', $entityName, $id);
 

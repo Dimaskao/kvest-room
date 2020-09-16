@@ -45,9 +45,8 @@ class Room
      */
     private bool $available = false;
 
-    public function __construct(int $id, string $name, string $image, string $description, string $peopleAndTimeInfo)
+    public function __construct(string $name, string $image, string $description, string $peopleAndTimeInfo)
     {
-        $this->id = $id;
         $this->name = $name;
         $this->image = $image;
         $this->description = $description;
@@ -64,23 +63,9 @@ class Room
         return $this->name;
     }
 
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
     public function getImage(): ?string
     {
         return $this->image;
-    }
-
-    public function setImage(string $image): self
-    {
-        $this->image = $image;
-
-        return $this;
     }
 
     public function getDescription(): ?string
@@ -88,23 +73,14 @@ class Room
         return $this->description;
     }
 
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
     public function getPeopleAndTimeInfo(): ?string
     {
         return $this->peopleAndTimeInfo;
     }
 
-    public function setPeopleAndTimeInfo(string $peopleAndTimeInfo): self
+    public function isAvailable(): bool
     {
-        $this->peopleAndTimeInfo = $peopleAndTimeInfo;
-
-        return $this;
+        return $this->available;
     }
 
     public function getRoom()
@@ -121,7 +97,7 @@ class Room
         return $roomDTO;
     }
 
-    public function publish(): void
+    public function makeAvailable(): void
     {
         $this->available = true;
     }

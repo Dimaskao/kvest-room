@@ -15,10 +15,10 @@ final class RoomFixture extends AbstractFixture
     public function load(ObjectManager $manager)
     {
         for ($i = 0; $i < self::ROOMS_COUNT; ++$i) {
-            $room = $this->createRoom($i + 1);
+            $room = $this->createRoom();
 
             if ($this->faker->boolean(80)) {
-                $room->publish();
+                $room->makeAvailable();
             }
             $manager->persist($room);
         }
@@ -26,7 +26,7 @@ final class RoomFixture extends AbstractFixture
         $manager->flush();
     }
 
-    public function createRoom($id): Room
+    public function createRoom(): Room
     {
         $name = $this->faker->words(
             $this->faker->numberBetween(1, 4),
@@ -34,7 +34,6 @@ final class RoomFixture extends AbstractFixture
         );
 
         return new Room(
-            $id,
             $name,
             $this->faker->imageUrl(),
             $this->faker->text,
