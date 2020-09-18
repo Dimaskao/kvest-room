@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  php-fpm:
+    build: ./docker/php-fpm
+    container_name: kvest-rooom_php_fpm
+    volumes:
+      - ./:/var/www/app
+    working_dir: /var/www/app
+    depends_on:
+      - mysql
+
+  nginx:
+    image: nginx:1.19
+    container_name: kvest-rooom_nginx
+    volumes:
+      - ./:/var/www/app
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 8089:80
+    depends_on:
+      - php-fpm
+
+  mysql:
+    image: mysql:8.0
+    container_name: kvest-room_mysql
+    volumes:
+      - ./var/mysql:/var/lib/mysql
+    ports:
+      - 3308:3306
+    environment:
+      MYSQL_DATABASE: kvest-room
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: dev
+      MYSQL_ROOT_PASSWORD: root
