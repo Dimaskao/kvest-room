@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Entity;
 
 use App\Entity\Room;
@@ -9,10 +11,10 @@ class RoomTest extends TestCase
 {
     public function testCreate(): void
     {
-        $name = "This is test";
-        $image = "image.jpg";
-        $description = "room";
-        $peopleAndTimeInfo = "2-4|60";
+        $name = 'This is test';
+        $image = 'image.jpg';
+        $description = 'room';
+        $peopleAndTimeInfo = '2-4|60';
 
         $room = new Room($name, $image, $description, $peopleAndTimeInfo);
 
@@ -24,10 +26,10 @@ class RoomTest extends TestCase
 
     public function testPublish(): void
     {
-        $name = "This is test";
-        $image = "image.jpg";
-        $description = "room";
-        $peopleAndTimeInfo = "2-4|60";
+        $name = 'This is test';
+        $image = 'image.jpg';
+        $description = 'room';
+        $peopleAndTimeInfo = '2-4|60';
 
         $room = new Room($name, $image, $description, $peopleAndTimeInfo);
 
