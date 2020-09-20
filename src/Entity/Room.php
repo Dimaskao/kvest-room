@@ -6,6 +6,8 @@ namespace App\Entity;
 
 use App\DTO\RoomDTO;
 use App\Repository\RoomRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -45,12 +47,18 @@ class Room
      */
     private bool $available = false;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="room")
+     */
+    private $comments;
+
     public function __construct(string $name, string $image, string $description, string $peopleAndTimeInfo)
     {
         $this->name = $name;
         $this->image = $image;
         $this->description = $description;
         $this->peopleAndTimeInfo = $peopleAndTimeInfo;
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -90,9 +98,9 @@ class Room
             $this->name,
             $this->image
         );
-
         $roomDTO->setDescription($this->description);
         $roomDTO->setPeopleAndTimeInfo($this->peopleAndTimeInfo);
+        $roomDTO->setComments($this->comments);
 
         return $roomDTO;
     }
@@ -100,5 +108,36 @@ class Room
     public function makeAvailable(): void
     {
         $this->available = true;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setRoom($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getRoom() === $this) {
+                $comment->setRoom(null);
+            }
+        }
+
+        return $this;
     }
 }
