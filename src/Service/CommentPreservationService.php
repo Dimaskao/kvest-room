@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-class CommentPreservation implements CommentPreservationInterface
+class CommentPreservationService implements CommentPreservationServiceInterface
 {
     public function saveComment()
     {
