@@ -1,0 +1,64 @@
+<div class="coments_wrapper">
+    <div class="coment">
+        <h3 id="dell" class="form-h2_2">Коментарі</h3>
+    </div>
+    {% for comment in room.comments %}
+        <div class="coment">
+            <div style="display: flex; justify-content: space-between;">
+                <h3 class="foto_h3">
+                    <img class="coment_foto" src="#">
+                    имя
+                </h3>
+                <div>{{ comment.createdAt | date('d-m-Y')}}</div>
+            </div>
+            <div>
+                {#@if(Auth::check())
+                <a href='{{ route("delete_comment", ["comment_id" => $c->id, "room_id" => $room->id]) }}'><img src='images/basket.png' class='basket'></a>
+                @endif#}
+                <span class="coment_text">{{ comment.text }}</span>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+<div class="forms">
+    <div class="form-left">
+        <div class="form2">
+            <h2 class="form-h2">Забронювати квест</h2>
+            <form action="action-page1.php">
+                <div class="field-block2">
+                    <label for="pip">ПІП:</label>
+                    <input id="name" class="field2" name="name" required type="text" placeholder="Владиславов Владислав Владиславович" id="pip">
+                </div>
+                <div class="field-block2">
+                    <label for="email">Ваш E-mail:</label>
+                    <input id="email" class="field2" name="email" required type="email" placeholder="vladislav@gmail.com">
+                </div>
+                <div class="field-block2">
+                    <label for="phone">Ваш телефон:</label>
+                    <input id="phone" class="field2" name="phone" required type="text" placeholder="+38(000)000-00-00">
+                </div>
+                <button class="button2" type="submit">Забронювати</button>
+            </form>
+        </div>
+    </div>
+{#    если зареган#}
+    <div class="form3">
+        <div class="coments_form">
+            <h2 class="form-h2">Додати коментар</h2>
+            <form action="#" method="POST" id="tut">
+                
+                <textarea name="text" placeholder="Текст коментаря..." value=""></textarea></br>
+                <input type="hidden" name="room_id" value="id room">
+                <button class="button3" name="go_comment" type="submit">Опублікувати</button>
+            </form>
+        </div>
+    </div>
+{#    иначе#}
+    <div class="form3">
+        <div class="coments_form">
+            <h2 class="form-h2_2">Додати коментар</h2>
+            <a href="#"><button class="button3" name="login" type="submit">Увійдвть або зарееструйтесь щоб додати коментар</button></a>
+        </div>
+    </div>
+    {#закончить если#}
+</div>

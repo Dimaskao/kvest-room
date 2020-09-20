@@ -20,6 +20,7 @@ final class RoomFixture extends AbstractFixture
             if ($this->faker->boolean(80)) {
                 $room->makeAvailable();
             }
+            $this->addReference('room_'.$i, $room);
             $manager->persist($room);
         }
 

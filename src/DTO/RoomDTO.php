@@ -16,6 +16,7 @@ final class RoomDTO
     private string $image;
     private ?string $description = null;
     private ?string $peopleAndTimeInfo = null;
+    private $comments;
 
     public function __construct(int $id, string $name, string $image)
     {
@@ -57,5 +58,15 @@ final class RoomDTO
     public function setPeopleAndTimeInfo(?string $peopleAndTimeInfo): void
     {
         $this->peopleAndTimeInfo = $peopleAndTimeInfo;
+    }
+
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    public function setComments($comments): void
+    {
+        $this->comments = $comments;
     }
 }
