@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
  */
-class HomeController extends AbstractController
+final class HomeController extends AbstractController
 {
     /**
      * @Route("/", methods={"GET"}, name="app_home")

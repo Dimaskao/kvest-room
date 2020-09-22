@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class RegisterController extends AbstractController
+final class RegisterController extends AbstractController
 {
     private $passwordEncoder;
 
@@ -20,13 +20,13 @@ class RegisterController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function registerShow()
+    public function registerShow(Request $request)
     {
-        if ( isset($_REQUEST['doGo']) ) {
-            $user = new User();
-            $user->setEmail($_REQUEST['email']);
-            $user->setName($_REQUEST['name']);
-            $user->setPassword($this->passwordEncoder->encodePassword($user, $_REQUEST['password']));
+
+        if ( null != $request->get('doGo') ) {
+
+            $user = new User($request->get('email'), $request->get('name'));
+            $user->setPassword($this->passwordEncoder->encodePassword($user, $request->get('password')));
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);

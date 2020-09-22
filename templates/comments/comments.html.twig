@@ -2,19 +2,19 @@
     <div class="coment">
         <h3 id="dell" class="form-h2_2">Коментарі</h3>
     </div>
-    {% for comment in room.comments %}
+    {% for comment in comments %}
         <div class="coment">
             <div style="display: flex; justify-content: space-between;">
                 <h3 class="foto_h3">
-                    <img class="coment_foto" src="#">
-                    имя
+                    <img class="coment_foto" src="{{ asset(comment.user.image) }}">
+                    {{ comment.user.name }}
                 </h3>
                 <div>{{ comment.createdAt | date('d-m-Y')}}</div>
             </div>
             <div>
-                {#@if(Auth::check())
-                <a href='{{ route("delete_comment", ["comment_id" => $c->id, "room_id" => $room->id]) }}'><img src='images/basket.png' class='basket'></a>
-                @endif#}
+                {% if app.user.id == comment.user.id %}
+                <a href='{{ path('app_remove_comment', {commentId: comment.id} ) }}'><img src='{{ asset('images/basket.png') }}' class='basket'></a>
+                {% endif %}
                 <span class="coment_text">{{ comment.text }}</span>
             </div>
         </div>
@@ -41,24 +41,23 @@
             </form>
         </div>
     </div>
-{#    если зареган#}
+    {% if app.user %}
     <div class="form3">
         <div class="coments_form">
             <h2 class="form-h2">Додати коментар</h2>
-            <form action="#" method="POST" id="tut">
-                
-                <textarea name="text" placeholder="Текст коментаря..." value=""></textarea></br>
-                <input type="hidden" name="room_id" value="id room">
+            <form action="{{ path('app_save_comment') }}" method="POST" id="tut">
+                <textarea name="text" placeholder="Текст коментаря..."></textarea></br>
+                <input type="hidden" name="roomId" value="{{ room.id }}">
                 <button class="button3" name="go_comment" type="submit">Опублікувати</button>
             </form>
         </div>
     </div>
-{#    иначе#}
+    {% else %}
     <div class="form3">
         <div class="coments_form">
             <h2 class="form-h2_2">Додати коментар</h2>
             <a href="#"><button class="button3" name="login" type="submit">Увійдвть або зарееструйтесь щоб додати коментар</button></a>
         </div>
     </div>
-    {#закончить если#}
+    {% endif %}
 </div>

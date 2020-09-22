@@ -18,13 +18,12 @@
                 {% endif %}
 
                 {% if app.user %}
-{#                @if(Request::is('profile')) <li class="current_page_item"><a href="{{ route('profile') }}">Профіль</a></li>#}
-{#                @else <li><a href="{{ route('profile') }}">Профіль</a></li> @endif#}
+                    {% if  uri  == '/profile' %} <li class="current_page_item"><a href="{{ path('app_profile') }}">Профіль</a></li>
+                    {% else %}<li><a href="{{ path('app_profile') }}">Профіль</a></li>{% endif %}
                 {% else %}
-{#                @if(Request::is('login')) <li class="current_page_item"><a href="{{ route('login') }}">Уійти</a></li>#}
-{#                @else <li><a href="{{ route('login') }}">Уійти</a></li> @endif#}
+                    {% if  uri  == '/login' %}<li class="current_page_item"><a href="{{ path('app_login') }}">Уійти</a></li>
+                    {% else %}<li><a href="{{ path('app_login') }}">Уійти</a></li>{% endif %}
                 {% endif %}
-                <li><a href="#">Уійти</a></li>
             </ul>
         </nav>
     </div>

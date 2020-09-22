@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,10 +37,17 @@ class Comment
      */
     private $room;
 
-    public function __construct(string $text, Room $room)
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    public function __construct(string $text, $room, $user)
     {
         $this->text = $text;
         $this->room = $room;
+        $this->user = $user;
         $this->createdAt = new \DateTimeImmutable();
     }
 
@@ -79,6 +88,19 @@ class Comment
     public function setRoom(?Room $room): self
     {
         $this->room = $room;
+
+        return $this;
+    }
+
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

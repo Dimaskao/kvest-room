@@ -8,6 +8,6 @@ class CommentPreservationService implements CommentPreservationServiceInterface
 {
     public function saveComment()
     {
-        // TODO: Implement saveComment() method.
+
     }
 }
