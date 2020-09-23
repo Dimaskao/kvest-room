@@ -13,7 +13,7 @@ use App\Repository\RoomRepository;
  *
  * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
  */
-class RoomListProvider implements RoomListProviderInterface
+final class RoomListProvider implements RoomListProviderInterface
 {
     private RoomRepository $roomRepository;
 

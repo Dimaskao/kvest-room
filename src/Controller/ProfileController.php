@@ -20,13 +20,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 final class ProfileController extends AbstractController
 {
-    private ProfilePageServiceInterface $profileProvider;
+    private ProfilePageServiceInterface $profilePageService;
     private EntityManagerInterface $em;
     private UserRepository $roomRepository;
 
-    public function __construct(ProfilePageServiceInterface $profileProvider, EntityManagerInterface $em, UserRepository $roomRepository)
+    public function __construct(ProfilePageServiceInterface $profilePageService, EntityManagerInterface $em, UserRepository $roomRepository)
     {
-        $this->profileProvider = $profileProvider;
+        $this->profilePageService = $profilePageService;
         $this->roomRepository = $roomRepository;
         $this->em = $em;
     }
@@ -37,7 +37,7 @@ final class ProfileController extends AbstractController
     public function account(): Response
     {
         if (!$this->getUser()) {
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('profile/profile.html.twig');
@@ -48,20 +48,29 @@ final class ProfileController extends AbstractController
      */
     public function saveImage(Request $request): RedirectResponse
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_home');
+        }
         if (null == $request->files->get('photo')) {
             return $this->redirectToRoute('app_profile');
         }
 
-        $fileName = $request->files->get('photo')->getClientOriginalName();
-        $path = '../public/uploads/';
-        $request->files->get('photo')->move($path, $fileName);
-
-        $user = $this->roomRepository->find($this->getUser()->getId());
-        $user->setImage('uploads/'.$fileName);
-
-        $this->em->persist($user);
-        $this->em->flush();
+        $this->profilePageService->savePhoto($request);
 
         return $this->redirectToRoute('app_profile');
+    }
+
+    /**
+     * @Route("/profile/remove", methods={"GET"}, name="app_profile_remove")
+     */
+    public function removeProfile(Request $request)
+    {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_home');
+        }
+        $this->profilePageService->removeProfile($request);
+        $this->get('security.token_storage')->setToken(null);
+
+        return $this->redirectToRoute('app_logout');
     }
 }

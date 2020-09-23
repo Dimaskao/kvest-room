@@ -112,6 +112,11 @@ class Room
         $this->available = true;
     }
 
+    public function makeNotAvailable(): void
+    {
+        $this->available = false;
+    }
+
     /**
      * @return Collection|Comment[]
      */
@@ -141,5 +146,25 @@ class Room
         }
 
         return $this;
+    }
+
+    public function addName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function addImage(string $image): void
+    {
+        $this->image = $image;
+    }
+
+    public function addDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    public function addPeopleAndTimeInfo(string $peopleAndTimeInfo): void
+    {
+        $this->peopleAndTimeInfo = $peopleAndTimeInfo;
     }
 }

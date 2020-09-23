@@ -8,6 +8,11 @@ use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/**
+ * This class create fake users data for DB.
+ *
+ * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
+ */
 final class UserFixture extends AbstractFixture
 {
     private const USERS_COUNT = 10;
@@ -30,6 +35,11 @@ final class UserFixture extends AbstractFixture
             $manager->persist($user);
         }
 
+        $admin = new User('admin@dev.com', 'admin');
+        $admin->setPassword($this->passwordEncoder->encodePassword($user, 'admin'));
+        $admin->setRoles(['ROLE_ADMIN']);
+        $manager->persist($admin);
+
         $manager->flush();
     }
 
@@ -39,7 +49,7 @@ final class UserFixture extends AbstractFixture
             $i.'@mail',
             $this->faker->name(),
         );
-        $user->setPassword($this->passwordEncoder->encodePassword($user, 111));
+        $user->setPassword($this->passwordEncoder->encodePassword($user, '111'));
         $user->setImage($this->faker->imageUrl());
 
         return $user;

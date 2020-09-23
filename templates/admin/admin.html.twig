@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Редактор{% endblock %}
+
+{% block main %}
+    <div class="main-wrapper2">
+        <div class="admin_menu">
+            {% if roomToEdit is defined %}
+                {% include 'inc/adminInc/adminEdit.html.twig' %}
+            {% elseif addRoom is defined %}
+                {% include 'inc/adminInc/adminAdd.html.twig' %}
+            {% else %}
+                {% include 'inc/adminInc/adminMenu.html.twig' %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

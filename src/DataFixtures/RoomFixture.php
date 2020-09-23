@@ -7,6 +7,11 @@ namespace App\DataFixtures;
 use App\Entity\Room;
 use Doctrine\Persistence\ObjectManager;
 
+/**
+ * This class create fake rooms data for DB.
+ *
+ * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
+ */
 final class RoomFixture extends AbstractFixture
 {
     private const ROOMS_COUNT = 10;

@@ -1,0 +1,13 @@
+<form action="{{ path('app_admin_add') }}" method="POST"><button>Додати нову кімнату</button></form>
+<br>
+<br>
+<form action="{{ path('app_admin_edit') }}" method="POST">
+    <select required name="room">
+        <option disabled selected>Виберіть кімнату</option>
+        {% for room in rooms %}
+            <option value="{{ room.id }}">{{ room.name }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <button type="submit" name="edit" value="edit!">Редагуваты</button>
+</form>

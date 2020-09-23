@@ -12,7 +12,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 
-class CommentPageService implements CommentPageServiceInterface
+/**
+ * This class get data for comments.
+ *
+ * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
+ */
+final class CommentPageService implements CommentPageServiceInterface
 {
     private RoomRepository $roomRepository;
     private CommentRepository $commentRepository;
