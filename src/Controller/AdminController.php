@@ -32,7 +32,7 @@ class AdminController extends AbstractController
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
-        if ($this->getUser()->getRoles()[0] !== "ROLE_ADMIN") {
+        if ('ROLE_ADMIN' !== $this->getUser()->getRoles()[0]) {
             return $this->redirectToRoute('app_home');
         }
 
@@ -51,7 +51,7 @@ class AdminController extends AbstractController
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
-        if ($this->getUser()->getRoles()[0] !== "ROLE_ADMIN") {
+        if ('ROLE_ADMIN' !== $this->getUser()->getRoles()[0]) {
             return $this->redirectToRoute('app_home');
         }
         if (null !== $request->get('confirm_edit')) {
@@ -76,7 +76,7 @@ class AdminController extends AbstractController
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
-        if ($this->getUser()->getRoles()[0] !== "ROLE_ADMIN") {
+        if ('ROLE_ADMIN' !== $this->getUser()->getRoles()[0]) {
             return $this->redirectToRoute('app_home');
         }
         if (null !== $request->get('confirm_add')) {

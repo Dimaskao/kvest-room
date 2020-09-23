@@ -70,6 +70,7 @@ final class ProfileController extends AbstractController
         }
         $this->profilePageService->removeProfile($request);
         $this->get('security.token_storage')->setToken(null);
+
         return $this->redirectToRoute('app_logout');
     }
 }

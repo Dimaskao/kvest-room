@@ -11,7 +11,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 /**
- * This class create fake comments data for DB
+ * This class create fake comments data for DB.
  *
  * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
  */

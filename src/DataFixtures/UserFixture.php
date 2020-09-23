@@ -9,7 +9,7 @@ use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
- * This class create fake users data for DB
+ * This class create fake users data for DB.
  *
  * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
  */

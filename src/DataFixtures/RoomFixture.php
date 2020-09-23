@@ -8,7 +8,7 @@ use App\Entity\Room;
 use Doctrine\Persistence\ObjectManager;
 
 /**
- * This class create fake rooms data for DB
+ * This class create fake rooms data for DB.
  *
  * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
  */
