@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
  */
-class RoomListController extends AbstractController
+final class RoomListController extends AbstractController
 {
     private RoomListProviderInterface $roomListProvider;
 

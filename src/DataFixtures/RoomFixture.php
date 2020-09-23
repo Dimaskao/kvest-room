@@ -12,7 +12,7 @@ final class RoomFixture extends AbstractFixture
     private const ROOMS_COUNT = 10;
     private const PEOPLE_AND_TIME_INFO = '2-4|60';
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         for ($i = 0; $i < self::ROOMS_COUNT; ++$i) {
             $room = $this->createRoom();

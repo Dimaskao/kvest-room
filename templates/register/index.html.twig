@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Реестрація{% endblock %}
+
+{% block main %}
+    <div class="form_register_wrapper">
+        <div class="form_register">
+            <h2 class="form-h2_2">Реестрація</h2>
+            {% if error is defined %}
+                <span style="color: red">{{ error }}</span>
+            {% endif %}
+            <form action="{{ path('app_register') }}" method="POST">
+                <div class="field-block">
+                    <label for="name">Нік</label>
+                    <input id="name" class="field" name="name"  type="text" value="" required>
+                </div>
+
+                <div class="field-block">
+                    <label for="email">E-mail:</label>
+                    <input id="email" class="field" name="email"  type="text" value="" required>
+                </div>
+
+                <div class="field-block">
+                    <label for="password">Пароль:</label>
+                    <input type="password" id="password" class="field" name="password" required>
+                </div>
+                <div class="field-block">
+                    <label for="password_confirmation">Пароль:</label>
+                    <input type="password" id="password_confirmation" class="field" name="password_confirmation" required>
+                </div>
+
+                <div class="field-block">
+                    <input id="check" name="check" checked type="checkbox" required>
+                    <span class="check-text">Я погоджуюся на опрацювання моїх персональних данних</span>
+                </div>
+                <input type="hidden" name="token" value="{{ csrf_token('register') }}"/>
+                <button class="button" type="submit" name="doGo" value="gogo!">Зареєструватися</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

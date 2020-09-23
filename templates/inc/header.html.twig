@@ -17,18 +17,13 @@
                     <li><a href="{{ path('app_rooms') }}">Квест кімнати</a></li>
                 {% endif %}
 
-{#                @if(Request::is('contact')) <li class="current_page_item"><a href="{{ route('contact') }}">Контакти</a></li>#}
-{#                @else <li><a href="{{ route('contact') }}">Контакти</a></li> @endif#}
-                <li><a href="#">Контакти</a></li>
-
-{#                @if(Auth::check())#}
-{#                @if(Request::is('profile')) <li class="current_page_item"><a href="{{ route('profile') }}">Профіль</a></li>#}
-{#                @else <li><a href="{{ route('profile') }}">Профіль</a></li> @endif#}
-{#                @else#}
-{#                @if(Request::is('login')) <li class="current_page_item"><a href="{{ route('login') }}">Уійти</a></li>#}
-{#                @else <li><a href="{{ route('login') }}">Уійти</a></li> @endif#}
-{#                @endif#}
-                <li><a href="#">Уійти</a></li>
+                {% if app.user %}
+                    {% if  uri  == '/profile' %} <li class="current_page_item"><a href="{{ path('app_profile') }}">Профіль</a></li>
+                    {% else %}<li><a href="{{ path('app_profile') }}">Профіль</a></li>{% endif %}
+                {% else %}
+                    {% if  uri  == '/login' %}<li class="current_page_item"><a href="{{ path('app_login') }}">Уійти</a></li>
+                    {% else %}<li><a href="{{ path('app_login') }}">Уійти</a></li>{% endif %}
+                {% endif %}
             </ul>
         </nav>
     </div>

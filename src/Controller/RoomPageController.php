@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
  */
-class RoomPageController extends AbstractController
+final class RoomPageController extends AbstractController
 {
     private RoomPageProviderInterface $roomProvider;
 
@@ -37,6 +37,7 @@ class RoomPageController extends AbstractController
 
         return $this->render('room/room.html.twig', [
             'room' => $room,
+            'comments' => $room->getComments()->toArray(),
         ]);
     }
 }

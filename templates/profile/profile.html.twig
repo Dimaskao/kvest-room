@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Профіль{% endblock %}
+
+{% block main %}
+    <div class="main-wrapper2">
+        <div class="profile">
+            <div class="foto">
+                <img src="{{ asset(app.user.image) }}">
+            </div>
+            <div class="inform">
+                <div calss="nick" style="margin-top: 8px;">Ім'я: {{ app.user.name }}</div>
+                <div calss="email">Пошта: {{ app.user.email }}</div>
+                <div calss="upload_foto">
+                    Змінити аватарку
+                    <form action="{{ path('app_profile_save_image') }}" method="POST" enctype="multipart/form-data">
+                        <input class="file" type="file" name="photo">
+                        <input class="go_file" type="submit" value="Змінити">
+                    </form>
+                </div>
+                <div class="dell_profile">
+                    <script type="text/javascript">
+                        function ConfirmDelete(){
+                            if (confirm("Delete Account?")){
+
+                            }
+                        }
+                    </script>
+                    <input type="submit" name="dell_profile" onclick="ConfirmDelete()" value="Видалити профіль">
+                </div>
+                <div calss="logout">
+                    <form action="{{ path('app_logout') }}" method="POST">
+                        <input type="submit" value="Вийти">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
