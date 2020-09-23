@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Repository\UserRepository;
+use App\Service\ProfilePageServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Service\ProfilePageServiceInterface;
 
 /**
  * Rendering profile page.
@@ -46,16 +48,16 @@ final class ProfileController extends AbstractController
      */
     public function saveImage(Request $request): RedirectResponse
     {
-        if ($request->files->get('photo') == null) {
+        if (null == $request->files->get('photo')) {
             return $this->redirectToRoute('app_profile');
         }
 
         $fileName = $request->files->get('photo')->getClientOriginalName();
-        $path = "../public/uploads/";
+        $path = '../public/uploads/';
         $request->files->get('photo')->move($path, $fileName);
 
         $user = $this->roomRepository->find($this->getUser()->getId());
-        $user->setImage('uploads/' . $fileName);
+        $user->setImage('uploads/'.$fileName);
 
         $this->em->persist($user);
         $this->em->flush();

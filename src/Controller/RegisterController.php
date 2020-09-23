@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 final class RegisterController extends AbstractController
@@ -26,8 +28,7 @@ final class RegisterController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        if ( null != $request->get('doGo') ) {
-
+        if (null != $request->get('doGo')) {
             if ($request->get('password') !== $request->get('password_confirmation')) {
                 return $this->render('register/index.html.twig', [
                     'controller_name' => 'RegisterController',
@@ -43,6 +44,7 @@ final class RegisterController extends AbstractController
 
             return $this->redirect($this->generateUrl('app_login'));
         }
+
         return $this->render('register/index.html.twig', [
             'controller_name' => 'RegisterController',
         ]);

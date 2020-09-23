@@ -11,17 +11,15 @@ use App\Repository\RoomRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
-use Webmozart\Assert\Assert;
 
 class CommentPageService implements CommentPageServiceInterface
 {
-
     private RoomRepository $roomRepository;
     private CommentRepository $commentRepository;
     private EntityManagerInterface $em;
     private Security $security;
 
-    public function __construct( Security $security, EntityManagerInterface $em, CommentRepository $commentRepository, RoomRepository $roomRepository)
+    public function __construct(Security $security, EntityManagerInterface $em, CommentRepository $commentRepository, RoomRepository $roomRepository)
     {
         $this->roomRepository = $roomRepository;
         $this->em = $em;
@@ -36,7 +34,7 @@ class CommentPageService implements CommentPageServiceInterface
         $user = $this->security->getUser();
 
         if (!$request->get('text')) {
-            throw new CommentCannotBeEmptyException;
+            throw new CommentCannotBeEmptyException();
         }
 
         $comment = new Comment(

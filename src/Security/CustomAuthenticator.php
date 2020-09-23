@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Security;
 
 use App\Entity\User;
@@ -47,7 +49,6 @@ class CustomAuthenticator extends AbstractFormLoginAuthenticator implements Pass
 
     public function getCredentials(Request $request)
     {
-
         $credentials = [
             'email' => $request->request->get('email'),
             'password' => $request->request->get('password'),
@@ -57,6 +58,7 @@ class CustomAuthenticator extends AbstractFormLoginAuthenticator implements Pass
             Security::LAST_USERNAME,
             $credentials['email']
         );
+
         return $credentials;
     }
 

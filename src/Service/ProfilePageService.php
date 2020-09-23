@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\Repository\UserRepository;
@@ -9,7 +11,6 @@ use Symfony\Component\Security\Core\Security;
 
 class ProfilePageService implements ProfilePageServiceInterface
 {
-
     private Security $security;
     private EntityManagerInterface $em;
     private UserRepository $roomRepository;
@@ -23,6 +24,5 @@ class ProfilePageService implements ProfilePageServiceInterface
 
     public function savePhoto(Request $request)
     {
-
     }
 }

@@ -40,6 +40,4 @@ final class RoomPageController extends AbstractController
             'comments' => $room->getComments()->toArray(),
         ]);
     }
-
-
 }

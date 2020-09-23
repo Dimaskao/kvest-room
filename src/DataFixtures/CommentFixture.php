@@ -63,5 +63,4 @@ final class CommentFixture extends AbstractFixture implements DependentFixtureIn
             UserFixture::class,
         ];
     }
-
 }

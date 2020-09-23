@@ -59,6 +59,7 @@ final class CommentsController extends AbstractController
         $this->em->flush();
 
         $roomId = $comment->getRoom()->getId();
+
         return $this->redirect("/room/$roomId");
     }
 }
