@@ -5,11 +5,18 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Collection\RoomList;
+use App\Entity\Room;
 use App\Repository\RoomRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class AdminService implements AdminServiceInterface
+/**
+ * This class get data for admin page.
+ * Also saves and edits rooms.
+ *
+ * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
+ */
+final class AdminService implements AdminServiceInterface
 {
     private RoomRepository $roomRepository;
     private EntityManagerInterface $em;
@@ -20,7 +27,7 @@ class AdminService implements AdminServiceInterface
         $this->em = $em;
     }
 
-    public function getRooms(?int $id = null)
+    public function getRooms($id = null)
     {
         if (null === $id) {
             $rooms = $this->roomRepository->findAll();
@@ -31,9 +38,10 @@ class AdminService implements AdminServiceInterface
         return $this->roomRepository->find($id);
     }
 
-    public function editRoom(Request $request, int $id): void
+    public function editRoom(Request $request): void
     {
-        $room = $this->roomRepository->find($id);
+        $roomId = $request->get('room');
+        $room = $this->roomRepository->find($roomId);
         $room->addName($request->get('name'));
         if (null !== $request->files->get('photo')) {
             $fileName = $request->files->get('photo')->getClientOriginalName();
@@ -54,13 +62,24 @@ class AdminService implements AdminServiceInterface
         $this->em->flush();
     }
 
-    public function setRoom()
+    public function addRoom(Request $request): void
     {
-        // TODO: Implement setRoom() method.
-    }
+        $fileName = $request->files->get('photo')->getClientOriginalName();
+        $path = '../public/uploads/';
+        $request->files->get('photo')->move($path, $fileName);
+        $image = 'uploads/'.$fileName;
 
-    public function removeRoom()
-    {
-        // TODO: Implement removeRoom() method.
+        $room = new Room(
+            $request->get('name'),
+            $image,
+            $request->get('description'),
+            $request->get('peopleAndTimeInfo'),
+        );
+        if ($request->get('available')) {
+            $room->makeAvailable();
+        }
+
+        $this->em->persist($room);
+        $this->em->flush();
     }
 }

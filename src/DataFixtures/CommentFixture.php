@@ -10,6 +10,11 @@ use App\Entity\User;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
+/**
+ * This class create fake comments data for DB
+ *
+ * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
+ */
 final class CommentFixture extends AbstractFixture implements DependentFixtureInterface
 {
     private const COMMENTS_COUNT = 40;

@@ -7,7 +7,12 @@ namespace App\Service;
 use App\DTO\RoomDTO;
 use App\Repository\RoomRepository;
 
-class RoomPageProvider implements RoomPageProviderInterface
+/**
+ * This class get data for room page.
+ *
+ * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
+ */
+final class RoomPageProvider implements RoomPageProviderInterface
 {
     private RoomRepository $roomRepository;
 

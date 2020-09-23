@@ -18,16 +18,18 @@
                         <input class="go_file" type="submit" value="Змінити">
                     </form>
                 </div>
+                {% if app.user.roles[0] != 'ROLE_ADMIN' %}
                 <div class="dell_profile">
                     <script type="text/javascript">
                         function ConfirmDelete(){
                             if (confirm("Delete Account?")){
-
+                                location.href='{{ path('app_profile_remove') }}';
                             }
                         }
                     </script>
                     <input type="submit" name="dell_profile" onclick="ConfirmDelete()" value="Видалити профіль">
                 </div>
+                {% endif %}
                 <div calss="logout">
                     <form action="{{ path('app_logout') }}" method="POST">
                         <input type="submit" value="Вийти">

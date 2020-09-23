@@ -8,11 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface AdminServiceInterface
 {
-    public function getRooms(?int $id = null);
+    public function getRooms($id = null);
 
-    public function editRoom(Request $request, int $id);
+    public function editRoom(Request $request);
 
-    public function setRoom();
-
-    public function removeRoom();
+    public function addRoom(Request $request);
 }

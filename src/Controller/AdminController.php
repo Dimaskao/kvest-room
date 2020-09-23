@@ -29,6 +29,13 @@ class AdminController extends AbstractController
      */
     public function admin(): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+        if ($this->getUser()->getRoles()[0] !== "ROLE_ADMIN") {
+            return $this->redirectToRoute('app_home');
+        }
+
         $rooms = $this->adminService->getRooms();
 
         return $this->render('admin/admin.html.twig', [
@@ -41,17 +48,45 @@ class AdminController extends AbstractController
      */
     public function edit(Request $request)
     {
-        $roomId = $request->get('room');
-
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+        if ($this->getUser()->getRoles()[0] !== "ROLE_ADMIN") {
+            return $this->redirectToRoute('app_home');
+        }
         if (null !== $request->get('confirm_edit')) {
-            $this->adminService->editRoom($request, $roomId);
-            $this->redirectToRoute('app_admin');
+            $this->adminService->editRoom($request);
+
+            return $this->redirectToRoute('app_admin');
         }
 
+        $roomId = $request->get('room');
         $room = $this->adminService->getRooms($roomId);
 
         return $this->render('admin/admin.html.twig', [
             'roomToEdit' => $room,
+        ]);
+    }
+
+    /**
+     * @Route("/admin/add", methods={"POST"}, name="app_admin_add")
+     */
+    public function add(Request $request)
+    {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+        if ($this->getUser()->getRoles()[0] !== "ROLE_ADMIN") {
+            return $this->redirectToRoute('app_home');
+        }
+        if (null !== $request->get('confirm_add')) {
+            $this->adminService->addRoom($request);
+
+            return $this->redirectToRoute('app_admin');
+        }
+
+        return $this->render('admin/admin.html.twig', [
+            'addRoom' => true,
         ]);
     }
 }
