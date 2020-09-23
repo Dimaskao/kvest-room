@@ -30,6 +30,11 @@ final class UserFixture extends AbstractFixture
             $manager->persist($user);
         }
 
+        $admin = new User('admin@dev.com', 'admin');
+        $admin->setPassword('admin');
+        $admin->setRoles(['ROLE_ADMIN']);
+        $manager->persist($admin);
+
         $manager->flush();
     }
 

@@ -12,8 +12,10 @@
                 <div>{{ comment.createdAt | date('d-m-Y')}}</div>
             </div>
             <div>
-                {% if app.user.id == comment.user.id %}
-                <a href='{{ path('app_remove_comment', {commentId: comment.id} ) }}'><img src='{{ asset('images/basket.png') }}' class='basket'></a>
+                {% if app.user %}
+                    {% if app.user.id == comment.user.id %}
+                    <a href='{{ path('app_remove_comment', {commentId: comment.id} ) }}'><img src='{{ asset('images/basket.png') }}' class='basket'></a>
+                    {% endif %}
                 {% endif %}
                 <span class="coment_text">{{ comment.text }}</span>
             </div>
@@ -56,7 +58,7 @@
     <div class="form3">
         <div class="coments_form">
             <h2 class="form-h2_2">Додати коментар</h2>
-            <a href="#"><button class="button3" name="login" type="submit">Увійдвть або зарееструйтесь щоб додати коментар</button></a>
+            <a href="{{ path('app_login') }}"><button class="button3" name="login" type="submit">Увійдвть або зарееструйтесь щоб додати коментар</button></a>
         </div>
     </div>
     {% endif %}
