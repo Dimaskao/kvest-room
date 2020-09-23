@@ -23,17 +23,6 @@ class ProfilePageService implements ProfilePageServiceInterface
 
     public function savePhoto(Request $request)
     {
-        $fileName = $request->files->get('photo')->getClientOriginalName();
-        $path = "../public/uploads/";
-        $request->files->get('photo')->move($path, $fileName);
-
-        $user = $this->roomRepository->find($this->security->getUser()->getId());
-        $user->setImage($path . $fileName);
-
-        return $user;
-        $this->em->persist($user);
-        $this->em->flush();
-
 
     }
 }

@@ -46,7 +46,7 @@
         <div class="coments_form">
             <h2 class="form-h2">Додати коментар</h2>
             <form action="{{ path('app_save_comment') }}" method="POST" id="tut">
-                <textarea name="text" placeholder="Текст коментаря..."></textarea></br>
+                <textarea name="text" placeholder="Текст коментаря..." required></textarea></br>
                 <input type="hidden" name="roomId" value="{{ room.id }}">
                 <button class="button3" name="go_comment" type="submit">Опублікувати</button>
             </form>

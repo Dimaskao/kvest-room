@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\Comment;
+use App\Exception\CommentCannotBeEmptyException;
 use App\Repository\CommentRepository;
 use App\Repository\RoomRepository;
+use App\Service\CommentPageService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -22,13 +23,15 @@ final class CommentsController extends AbstractController
 {
     private RoomRepository $roomRepository;
     private EntityManagerInterface $em;
+    private CommentPageService $commentPageService;
     private CommentRepository $commentRepository;
 
-    public function __construct(EntityManagerInterface $em, RoomRepository $roomRepository, CommentRepository $commentRepository)
+    public function __construct(EntityManagerInterface $em, RoomRepository $roomRepository, CommentRepository $commentRepository, CommentPageService $commentPageService)
     {
         $this->roomRepository = $roomRepository;
         $this->em = $em;
         $this->commentRepository = $commentRepository;
+        $this->commentPageService = $commentPageService;
     }
 
     /**
@@ -37,17 +40,11 @@ final class CommentsController extends AbstractController
     public function saveComment(Request $request): RedirectResponse
     {
         $roomId = $request->get('roomId');
-        $room = $this->roomRepository->find($roomId);
-        $user = $this->getUser();
-
-        $comment = new Comment(
-            $request->get('text'),
-            $room,
-            $user,
-        );
-
-        $this->em->persist($comment);
-        $this->em->flush();
+        try {
+            $this->commentPageService->saveComment($request);
+        } catch (CommentCannotBeEmptyException $e) {
+            return $this->redirect('/room/'.$roomId);
+        }
 
         return $this->redirect('/room/'.$roomId);
     }

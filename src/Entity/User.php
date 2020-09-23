@@ -44,7 +44,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private string $image;
+    private ?string $image = 'images/defaultUser.png';
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user")
