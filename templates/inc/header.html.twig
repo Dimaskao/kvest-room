@@ -24,6 +24,11 @@
                     {% if  uri  == '/login' %}<li class="current_page_item"><a href="{{ path('app_login') }}">Уійти</a></li>
                     {% else %}<li><a href="{{ path('app_login') }}">Уійти</a></li>{% endif %}
                 {% endif %}
+
+                {% if app.user and app.user.roles[0] == 'ROLE_ADMIN'%}
+                    {% if  uri  == '/admin' %}<li class="current_page_item"><a href="{{ path('app_admin') }}">Редактор</a></li>
+                    {% else %}<li><a href="{{ path('app_admin') }}">Редактор</a></li>{% endif %}
+                {% endif %}
             </ul>
         </nav>
     </div>

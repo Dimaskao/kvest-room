@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Редактор{% endblock %}
+
+{% block main %}
+    <div class="main-wrapper2">
+        <div class="admin_menu">
+            {% if roomToEdit is defined %}
+                <form action="{{ path('app_admin_edit') }}" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="room" value="{{ roomToEdit.id }}">
+                    <div class="field-block">
+                        <label for="roomName">Назва: </label>
+                        <input name="name" id="roomName" value="{{ roomToEdit.name }}"/>
+                    </div>
+                    <div class="field-block">
+                        <label for="roomName"> Фото: </label>
+                        <input class="file" type="file" name="photo">
+                    </div>
+                    <div class="field-block">
+                        <label for="roomDescription">Опис: </label>
+                        <textarea id="roomDescription" name="description">{{ roomToEdit.description }}</textarea>
+                    </div>
+                    <div class="field-block">
+                        <label for="peopleAndTimeInfo">
+                            Час та кількість людей <br>
+                            Час у хв., кількість від - до <br>
+                            Приклад: <br>
+                            2-4|45
+                        </label>
+                        <input id="peopleAndTimeInfo" name="peopleAndTimeInfo" value="{{ roomToEdit.peopleAndTimeInfo }}"/>
+                    </div>
+                    <div class="field-block">
+                        <span class="check-text">Зробити доступною</span>
+                        <input id="check" name="available" value="1" type="radio"> так
+                        <input id="check" name="available" value="0" checked type="radio"> ні
+                    </div>
+                    <button type="submit" name="confirm_edit" value="confirm_edit!">Підтвердити</button>
+                </form>
+            {% else %}
+                <a href="#"><button>Додати нову кімнату</button></a>
+                <br>
+                <br>
+                <form action="{{ path('app_admin_edit') }}" method="POST">
+                    <select required name="room">
+                        <option disabled selected>Виберіть кімнату</option>
+                        {% for room in rooms %}
+                            <option value="{{ room.id }}">{{ room.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <br>
+                    <button type="submit" name="edit" value="edit!">Редагуваты</button>
+                    <button type="submit" name="remove" value="remove!">Выдалити</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -31,7 +31,7 @@ final class UserFixture extends AbstractFixture
         }
 
         $admin = new User('admin@dev.com', 'admin');
-        $admin->setPassword('admin');
+        $admin->setPassword($this->passwordEncoder->encodePassword($user, 'admin'));
         $admin->setRoles(['ROLE_ADMIN']);
         $manager->persist($admin);
 
@@ -44,7 +44,7 @@ final class UserFixture extends AbstractFixture
             $i.'@mail',
             $this->faker->name(),
         );
-        $user->setPassword($this->passwordEncoder->encodePassword($user, 111));
+        $user->setPassword($this->passwordEncoder->encodePassword($user, '111'));
         $user->setImage($this->faker->imageUrl());
 
         return $user;
