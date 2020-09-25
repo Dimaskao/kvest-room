@@ -9,7 +9,6 @@ use App\Exception\CommentCannotBeEmptyException;
 use App\Repository\CommentRepository;
 use App\Repository\RoomRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 
 /**
@@ -17,7 +16,7 @@ use Symfony\Component\Security\Core\Security;
  *
  * @author Dmytro Lytvynchuk <dmytrolutv@gmail.com>
  */
-final class CommentPageService implements CommentPageServiceInterface
+final class CommentService implements CommentServiceInterface
 {
     private RoomRepository $roomRepository;
     private CommentRepository $commentRepository;
@@ -32,23 +31,28 @@ final class CommentPageService implements CommentPageServiceInterface
         $this->security = $security;
     }
 
-    public function saveComment(Request $request)
+    public function saveComment($roomId, $text): void
     {
-        $roomId = $request->get('roomId');
         $room = $this->roomRepository->find($roomId);
         $user = $this->security->getUser();
 
-        if (!$request->get('text')) {
+        if (!$text) {
             throw new CommentCannotBeEmptyException();
         }
 
         $comment = new Comment(
-            $request->get('text'),
+            $text,
             $room,
             $user,
         );
 
         $this->em->persist($comment);
+        $this->em->flush();
+    }
+
+    public function removeComment($comment): void
+    {
+        $this->em->remove($comment);
         $this->em->flush();
     }
 }

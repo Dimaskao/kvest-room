@@ -27,6 +27,7 @@ final class RoomRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('r')
             ->select('r.id', 'r.name', 'r.image')
             ->where('r.available = true')
+            ->orderBy('r.id', 'DESC')
             ->getQuery();
 
         return $query->getResult();

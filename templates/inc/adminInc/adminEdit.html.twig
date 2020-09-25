@@ -23,8 +23,8 @@
     </div>
     <div class="field-block">
         <span class="check-text">Зробити доступною</span>
-        <input id="check" name="available" value="1" checked type="radio"> так
-        <input id="check" name="available" value="0" type="radio"> ні
+        <input id="check" name="available" value="1" {% if roomToEdit.available == 1%} checked {% endif %}type="radio"> так
+        <input id="check" name="available" value="0" {% if roomToEdit.available == 0%} checked {% endif %} type="radio"> ні
     </div>
     <button type="submit" name="confirm_edit" value="confirm_edit!">Підтвердити</button>
 </form>

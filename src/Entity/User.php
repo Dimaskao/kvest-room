@@ -6,7 +6,6 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -49,7 +48,7 @@ class User implements UserInterface
     private ?string $image = 'images/defaultUser.png';
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user", orphanRemoval=true)
      */
     private $comments;
 
@@ -63,6 +62,18 @@ class User implements UserInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
     }
 
     /**
@@ -126,6 +137,11 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
     public function setImage(string $image): self
     {
         $this->image = $image;
@@ -133,11 +149,8 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Comment[]
-     */
-    public function getComments(): Collection
+    public function getImage(): ?string
     {
-        return $this->comments;
+        return $this->image;
     }
 }
