@@ -101,7 +101,7 @@ class Comment
             return true;
         }
 
-        if ($user->getRoles()[0] === 'ROLE_ADMIN') {
+        if ('ROLE_ADMIN' === $user->getRoles()[0]) {
             return true;
         }
 

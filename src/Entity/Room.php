@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use App\DTO\RoomDTO;
 use App\Repository\RoomRepository;
+use App\Util\SlugUtil;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -59,6 +60,11 @@ class Room
      */
     private int $timeCount;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private ?string $slug;
+
     public function __construct(string $name, string $image, string $description, string $peopleCount, int $timeCount)
     {
         $this->name = $name;
@@ -99,18 +105,20 @@ class Room
         $roomDTO = new RoomDTO(
             $this->id,
             $this->name,
-            $this->image
+            $this->image,
         );
         $roomDTO->setDescription($this->description);
         $roomDTO->setPeopleCount($this->peopleCount);
         $roomDTO->setTimeCount($this->timeCount);
         $roomDTO->setComments($this->comments);
+        $roomDTO->setSlug($this->slug);
 
         return $roomDTO;
     }
 
     public function makeAvailable(): void
     {
+        $this->createSlug();
         $this->available = true;
     }
 
@@ -180,22 +188,18 @@ class Room
         return $this->peopleCount;
     }
 
-    public function setPeopleCount(string $peopleCount): self
-    {
-        $this->peopleCount = $peopleCount;
-
-        return $this;
-    }
-
     public function getTimeCount(): ?int
     {
         return $this->timeCount;
     }
 
-    public function setTimeCount(int $timeCount): self
+    private function createSlug(): void
     {
-        $this->timeCount = $timeCount;
+        $this->slug = SlugUtil::generate($this->name);
+    }
 
-        return $this;
+    public function getSlug(): ?string
+    {
+        return $this->slug;
     }
 }

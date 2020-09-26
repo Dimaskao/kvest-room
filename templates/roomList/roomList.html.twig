@@ -14,7 +14,7 @@
                 {% for room in roomList.roomList %}
                 <div class="row-item">
                     <div class="kvestroom">{{ room.name }}</div>
-                    <a href="{{ path('app_room', { id: room.id}) }}">
+                    <a href="{{ path('app_room', { field: room.slug}) }}">
                         <section class="img">
                             <img src="{{ room.image }}">
                         </section>

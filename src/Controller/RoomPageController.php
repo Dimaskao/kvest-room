@@ -25,12 +25,12 @@ final class RoomPageController extends AbstractController
     }
 
     /**
-     * @Route("/room/{id}", requirements={"id"="\d+"}, methods={"GET"}, name="app_room")
+     * @Route("/room/{field}", requirements={"field": "^[a-z0-9]+(?:-[a-z0-9]+)*$"}, methods={"GET"}, name="app_room")
      */
-    public function getRoomById(int $id): Response
+    public function getRoomById($field): Response//TODO: уточнить насчет mixed
     {
         try {
-            $room = $this->roomProvider->getRoomById($id);
+            $room = $this->roomProvider->getRoomBySlug($field);
         } catch (EntityNotFoundException $e) {
             throw $this->createNotFoundException($e->getMessage(), $e);
         }

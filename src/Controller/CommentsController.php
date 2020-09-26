@@ -40,13 +40,15 @@ final class CommentsController extends AbstractController
     public function saveComment(Request $request): RedirectResponse
     {
         $roomId = $request->get('roomId');
+        $roomSlug = $request->get('roomSlug');
         $text = $request->get('text');
         try {
-            $this->commentService->saveComment((int)$roomId, $text);
+            $this->commentService->saveComment((int) $roomId, $text);
         } catch (CommentCannotBeEmptyException $e) {
-            return $this->redirectToRoute('app_room', ['id' => $roomId]);
+            return $this->redirectToRoute('app_room', ['field' => $roomSlug]);
         }
-        return $this->redirectToRoute('app_room', ['id' => $roomId]);
+
+        return $this->redirectToRoute('app_room', ['field' => $roomSlug]);
     }
 
     /**
@@ -60,8 +62,8 @@ final class CommentsController extends AbstractController
         }
 
         $this->commentService->removeComment($comment);
-        $roomId = $comment->getRoom()->getId();
+        $roomSlug = $comment->getRoom()->getSlug();
 
-        return $this->redirectToRoute('app_room', ['id' => $roomId]);
+        return $this->redirectToRoute('app_room', ['field' => $roomSlug]);
     }
 }
