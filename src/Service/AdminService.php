@@ -8,7 +8,7 @@ use App\Collection\RoomList;
 use App\Entity\Room;
 use App\Repository\RoomRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * This class get data for admin page.
@@ -20,11 +20,13 @@ final class AdminService implements AdminServiceInterface
 {
     private RoomRepository $roomRepository;
     private EntityManagerInterface $em;
+    private ParameterBagInterface $parameters;
 
-    public function __construct(RoomRepository $roomRepository, EntityManagerInterface $em)
+    public function __construct(RoomRepository $roomRepository, EntityManagerInterface $em, ParameterBagInterface $parameters)
     {
         $this->roomRepository = $roomRepository;
         $this->em = $em;
+        $this->parameters = $parameters;
     }
 
     public function getRooms($id = null)
@@ -38,44 +40,45 @@ final class AdminService implements AdminServiceInterface
         return $this->roomRepository->find($id);
     }
 
-    public function editRoom(Request $request): void
+    public function editRoom(string $roomId, string $name, $photo, string $description, $isAvailable, string $peopleAndTimeInfo): void
     {
-        $roomId = $request->get('room');
         $room = $this->roomRepository->find($roomId);
-        $room->addName($request->get('name'));
-        if (null !== $request->files->get('photo')) {
-            $fileName = $request->files->get('photo')->getClientOriginalName();
-            $path = '../public/uploads/';
-            $request->files->get('photo')->move($path, $fileName);
+        $room->addName($name);
+        if (null !== $photo) {
+            $fileName = $photo->getClientOriginalName();
+            $path = $this->parameters->get('app.save_photo_path');
+            $photo->move($path, $fileName);
 
             $room->addImage('uploads/'.$fileName);
         }
-        $room->addDescription($request->get('description'));
-        if ($request->get('available')) {
+        $room->addDescription($description);
+        if ($isAvailable) {
             $room->makeAvailable();
         } else {
             $room->makeNotAvailable();
         }
-        $room->addPeopleAndTimeInfo($request->get('peopleAndTimeInfo'));
+        $room->addPeopleAndTimeInfo($peopleAndTimeInfo);
 
         $this->em->persist($room);
         $this->em->flush();
     }
 
-    public function addRoom(Request $request): void
+    public function addRoom(string $fileName, $photo, string $name, string $description, string $peopleAndTimeInfo, $isAvailable): void
     {
-        $fileName = $request->files->get('photo')->getClientOriginalName();
-        $path = '../public/uploads/';
-        $request->files->get('photo')->move($path, $fileName);
-        $image = 'uploads/'.$fileName;
+        $path = $this->parameters->get('app.save_photo_path');
+        $photo->move($path, $fileName);
+
+        $pathIntoDb = $this->parameters->get('app.photo_into_db');
+
+        $image = $pathIntoDb.$fileName;
 
         $room = new Room(
-            $request->get('name'),
+            $name,
             $image,
-            $request->get('description'),
-            $request->get('peopleAndTimeInfo'),
+            $description,
+            $peopleAndTimeInfo,
         );
-        if ($request->get('available')) {
+        if ($isAvailable) {
             $room->makeAvailable();
         }
 

@@ -7,7 +7,7 @@ namespace App\Controller;
 use App\Exception\CommentCannotBeEmptyException;
 use App\Repository\CommentRepository;
 use App\Repository\RoomRepository;
-use App\Service\CommentPageService;
+use App\Service\CommentService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -23,15 +23,15 @@ final class CommentsController extends AbstractController
 {
     private RoomRepository $roomRepository;
     private EntityManagerInterface $em;
-    private CommentPageService $commentPageService;
+    private CommentService $commentService;
     private CommentRepository $commentRepository;
 
-    public function __construct(EntityManagerInterface $em, RoomRepository $roomRepository, CommentRepository $commentRepository, CommentPageService $commentPageService)
+    public function __construct(EntityManagerInterface $em, RoomRepository $roomRepository, CommentRepository $commentRepository, CommentService $commentService)
     {
         $this->roomRepository = $roomRepository;
         $this->em = $em;
         $this->commentRepository = $commentRepository;
-        $this->commentPageService = $commentPageService;
+        $this->commentService = $commentService;
     }
 
     /**
@@ -40,8 +40,9 @@ final class CommentsController extends AbstractController
     public function saveComment(Request $request): RedirectResponse
     {
         $roomId = $request->get('roomId');
+        $text = $request->get('text');
         try {
-            $this->commentPageService->saveComment($request);
+            $this->commentService->saveComment($roomId, $text);
         } catch (CommentCannotBeEmptyException $e) {
             return $this->redirect('/room/'.$roomId);
         }
@@ -58,9 +59,8 @@ final class CommentsController extends AbstractController
         if ($comment->getUser()->getId() != $this->getUser()->getId() && 'ROLE_ADMIN' !== $this->getUser()->getRoles()[0]) {
             return $this->redirectToRoute('app_home');
         }
-        $this->em->remove($comment);
-        $this->em->flush();
 
+        $this->commentService->removeComment($comment);
         $roomId = $comment->getRoom()->getId();
 
         return $this->redirect("/room/$roomId");

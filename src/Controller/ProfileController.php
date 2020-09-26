@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Repository\UserRepository;
-use App\Service\ProfilePageServiceInterface;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\ProfileServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,15 +20,15 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 final class ProfileController extends AbstractController
 {
-    private ProfilePageServiceInterface $profilePageService;
-    private EntityManagerInterface $em;
+    private ProfileServiceInterface $profilePageService;
     private UserRepository $roomRepository;
+    private ParameterBagInterface $parameters;
 
-    public function __construct(ProfilePageServiceInterface $profilePageService, EntityManagerInterface $em, UserRepository $roomRepository)
+    public function __construct(ProfileServiceInterface $profilePageService, UserRepository $roomRepository, ParameterBagInterface $parameters)
     {
         $this->profilePageService = $profilePageService;
         $this->roomRepository = $roomRepository;
-        $this->em = $em;
+        $this->parameters = $parameters;
     }
 
     /**
@@ -36,9 +36,7 @@ final class ProfileController extends AbstractController
      */
     public function account(): Response
     {
-        if (!$this->getUser()) {
-            return $this->redirectToRoute('app_home');
-        }
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
         return $this->render('profile/profile.html.twig');
     }
@@ -55,7 +53,10 @@ final class ProfileController extends AbstractController
             return $this->redirectToRoute('app_profile');
         }
 
-        $this->profilePageService->savePhoto($request);
+        $fileName = $request->files->get('photo')->getClientOriginalName();
+        $photo = $request->files->get('photo');
+
+        $this->profilePageService->savePhoto($fileName, $photo);
 
         return $this->redirectToRoute('app_profile');
     }
@@ -65,11 +66,11 @@ final class ProfileController extends AbstractController
      */
     public function removeProfile(Request $request)
     {
-        if (!$this->getUser()) {
-            return $this->redirectToRoute('app_home');
-        }
-        $this->profilePageService->removeProfile($request);
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        $this->profilePageService->removeProfile();
+
         $this->get('security.token_storage')->setToken(null);
+        $request->getSession()->invalidate();
 
         return $this->redirectToRoute('app_logout');
     }
