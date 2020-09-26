@@ -44,10 +44,9 @@ final class CommentsController extends AbstractController
         try {
             $this->commentService->saveComment((int)$roomId, $text);
         } catch (CommentCannotBeEmptyException $e) {
-            return $this->redirect('/room/'.$roomId);
+            return $this->redirectToRoute('app_room', ['id' => $roomId]);
         }
-
-        return $this->redirect('/room/'.$roomId);
+        return $this->redirectToRoute('app_room', ['id' => $roomId]);
     }
 
     /**
@@ -63,6 +62,6 @@ final class CommentsController extends AbstractController
         $this->commentService->removeComment($comment);
         $roomId = $comment->getRoom()->getId();
 
-        return $this->redirect("/room/$roomId");
+        return $this->redirectToRoute('app_room', ['id' => $roomId]);
     }
 }

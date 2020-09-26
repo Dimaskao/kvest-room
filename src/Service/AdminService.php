@@ -48,9 +48,10 @@ final class AdminService implements AdminServiceInterface
         if (null !== $photo) {
             $fileName = $photo->getClientOriginalName();
             $path = $this->parameters->get('app.save_photo_path');
+            $pathIntoDb = $this->parameters->get('app.photo_into_db');
             $photo->move($path, $fileName);
 
-            $room->addImage('uploads/'.$fileName);
+            $room->addImage($pathIntoDb.$fileName);
         }
         $room->addDescription($description);
         if ($isAvailable) {
