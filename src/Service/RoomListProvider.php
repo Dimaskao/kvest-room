@@ -25,11 +25,11 @@ final class RoomListProvider implements RoomListProviderInterface
     public function getRoomList(): RoomList
     {
         $result = $this->roomRepository->getRoomList();
-        $roomList = [];
+        $roomList = new RoomList();
         foreach ($result as $room) {
-            $roomList[] = new RoomDTO($room['id'], $room['name'], $room['image']);
+            $roomList->addRoom($room);
         }
 
-        return new RoomList($roomList);
+        return $roomList;
     }
 }

@@ -49,13 +49,14 @@ class AdminController extends AbstractController
             $photo = $request->files->get('photo');
             $description = $request->get('description');
             $isAvailable = $request->get('available');
-            $peopleAndTimeInfo = $request->get('peopleAndTimeInfo');
+            $peopleCount = $request->get('peopleCount');
+            $timeCount = $request->get('timeCount');
 
-            $this->adminService->editRoom($roomId, $name, $photo, $description, $isAvailable, $peopleAndTimeInfo);
+            $this->adminService->editRoom((int)$roomId, $name, $photo, $description, (bool)$isAvailable, $peopleCount, (int)$timeCount);
 
             return $this->redirectToRoute('app_admin');
         }
-        $room = $this->adminService->getRooms($roomId);
+        $room = $this->adminService->getRooms((int)$roomId);
 
         return $this->render('admin/admin.html.twig', [
             'roomToEdit' => $room,
@@ -73,9 +74,10 @@ class AdminController extends AbstractController
             $name = $request->get('name');
             $description = $request->get('description');
             $isAvailable = $request->get('available');
-            $peopleAndTimeInfo = $request->get('peopleAndTimeInfo');
+            $peopleCount = $request->get('peopleCount');
+            $timeCount = $request->get('timeCount');
 
-            $this->adminService->addRoom($fileName, $photo, $name, $description, $peopleAndTimeInfo, $isAvailable);
+            $this->adminService->addRoom($fileName, $photo, $name, $description, (bool)$isAvailable, $peopleCount, (int)$timeCount);
 
             return $this->redirectToRoute('app_admin');
         }

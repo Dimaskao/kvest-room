@@ -42,12 +42,11 @@ final class CommentsController extends AbstractController
         $roomId = $request->get('roomId');
         $text = $request->get('text');
         try {
-            $this->commentService->saveComment($roomId, $text);
+            $this->commentService->saveComment((int)$roomId, $text);
         } catch (CommentCannotBeEmptyException $e) {
-            return $this->redirect('/room/'.$roomId);
+            return $this->redirectToRoute('app_room', ['id' => $roomId]);
         }
-
-        return $this->redirect('/room/'.$roomId);
+        return $this->redirectToRoute('app_room', ['id' => $roomId]);
     }
 
     /**
@@ -56,13 +55,13 @@ final class CommentsController extends AbstractController
     public function removeComment(int $commentId): RedirectResponse
     {
         $comment = $this->commentRepository->find($commentId);
-        if ($comment->getUser()->getId() != $this->getUser()->getId() && 'ROLE_ADMIN' !== $this->getUser()->getRoles()[0]) {
+        if (!$comment->canBeRemovedBy($this->getUser())) {
             return $this->redirectToRoute('app_home');
         }
 
         $this->commentService->removeComment($comment);
         $roomId = $comment->getRoom()->getId();
 
-        return $this->redirect("/room/$roomId");
+        return $this->redirectToRoute('app_room', ['id' => $roomId]);
     }
 }

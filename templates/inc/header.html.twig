@@ -4,29 +4,28 @@
         <nav id="nav">
             <ul>
                 {% set uri =  app.request.requestUri  %}
-
-                {% if  uri  == '/' %}
+                {% if  app.request.get('_route')  == 'app_home' %}
                     <li class="current_page_item"><a href="{{ path('app_home') }}">Головна</a></li>
                 {% else %}
                     <li><a href="{{ path('app_home') }}">Головна</a></li>
                 {% endif %}
 
-                {% if  uri  == '/rooms' %}
+                {% if  app.request.get('_route')  == 'app_rooms' %}
                     <li class="current_page_item"><a href="{{ path('app_rooms') }}">Квест кімнати</a></li>
                 {% else %}
                     <li><a href="{{ path('app_rooms') }}">Квест кімнати</a></li>
                 {% endif %}
 
                 {% if app.user %}
-                    {% if  uri  == '/profile' %} <li class="current_page_item"><a href="{{ path('app_profile') }}">Профіль</a></li>
+                    {% if  app.request.get('_route')  == 'app_profile' %} <li class="current_page_item"><a href="{{ path('app_profile') }}">Профіль</a></li>
                     {% else %}<li><a href="{{ path('app_profile') }}">Профіль</a></li>{% endif %}
                 {% else %}
-                    {% if  uri  == '/login' %}<li class="current_page_item"><a href="{{ path('app_login') }}">Увійти</a></li>
+                    {% if  app.request.get('_route')  == 'app_login' %}<li class="current_page_item"><a href="{{ path('app_login') }}">Увійти</a></li>
                     {% else %}<li><a href="{{ path('app_login') }}">Уійти</a></li>{% endif %}
                 {% endif %}
 
-                {% if app.user and app.user.roles[0] == 'ROLE_ADMIN'%}
-                    {% if  uri  == '/admin' %}<li class="current_page_item"><a href="{{ path('app_admin') }}">Редактор</a></li>
+                {% if is_granted('ROLE_ADMIN')%}
+                    {% if  app.request.get('_route')  == 'app_admin' %}<li class="current_page_item"><a href="{{ path('app_admin') }}">Редактор</a></li>
                     {% else %}<li><a href="{{ path('app_admin') }}">Редактор</a></li>{% endif %}
                 {% endif %}
             </ul>

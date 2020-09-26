@@ -7,6 +7,7 @@ namespace App\Service;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\Security;
 
 /**
@@ -30,7 +31,7 @@ final class ProfileService implements ProfileServiceInterface
         $this->parameters = $parameters;
     }
 
-    public function savePhoto(string $fileName, $photo)
+    public function savePhoto(string $fileName, UploadedFile $photo)
     {
         $pathToSave = $this->parameters->get('app.save_photo_path');
         $pathIntoDb = $this->parameters->get('app.photo_into_db');

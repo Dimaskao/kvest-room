@@ -9,6 +9,7 @@ use App\Entity\Room;
 use App\Repository\RoomRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * This class get data for admin page.
@@ -29,7 +30,7 @@ final class AdminService implements AdminServiceInterface
         $this->parameters = $parameters;
     }
 
-    public function getRooms($id = null)
+    public function getRooms(?int $id = null)
     {
         if (null === $id) {
             $rooms = $this->roomRepository->findAll();
@@ -40,16 +41,17 @@ final class AdminService implements AdminServiceInterface
         return $this->roomRepository->find($id);
     }
 
-    public function editRoom(string $roomId, string $name, $photo, string $description, $isAvailable, string $peopleAndTimeInfo): void
+    public function editRoom(int $roomId, string $name, ?UploadedFile $photo, string $description, bool $isAvailable, string $peopleCount, int $timeCount): void
     {
         $room = $this->roomRepository->find($roomId);
         $room->addName($name);
         if (null !== $photo) {
             $fileName = $photo->getClientOriginalName();
             $path = $this->parameters->get('app.save_photo_path');
+            $pathIntoDb = $this->parameters->get('app.photo_into_db');
             $photo->move($path, $fileName);
 
-            $room->addImage('uploads/'.$fileName);
+            $room->addImage($pathIntoDb.$fileName);
         }
         $room->addDescription($description);
         if ($isAvailable) {
@@ -57,13 +59,14 @@ final class AdminService implements AdminServiceInterface
         } else {
             $room->makeNotAvailable();
         }
-        $room->addPeopleAndTimeInfo($peopleAndTimeInfo);
+        $room->addTimeCount($timeCount);
+        $room->addPeopleCount($peopleCount);
 
         $this->em->persist($room);
         $this->em->flush();
     }
 
-    public function addRoom(string $fileName, $photo, string $name, string $description, string $peopleAndTimeInfo, $isAvailable): void
+    public function addRoom(string $fileName, UploadedFile $photo, string $name, string $description, bool $isAvailable, string $peopleCount, int $timeCount): void
     {
         $path = $this->parameters->get('app.save_photo_path');
         $photo->move($path, $fileName);
@@ -76,7 +79,8 @@ final class AdminService implements AdminServiceInterface
             $name,
             $image,
             $description,
-            $peopleAndTimeInfo,
+            $peopleCount,
+            $timeCount,
         );
         if ($isAvailable) {
             $room->makeAvailable();

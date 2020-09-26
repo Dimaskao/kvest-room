@@ -27,17 +27,16 @@ final class RoomPageController extends AbstractController
     /**
      * @Route("/room/{id}", requirements={"id"="\d+"}, methods={"GET"}, name="app_room")
      */
-    public function getRoomById($id): Response
+    public function getRoomById(int $id): Response
     {
         try {
-            $room = $this->roomProvider->getRoomByIdFromDB($id);
+            $room = $this->roomProvider->getRoomById($id);
         } catch (EntityNotFoundException $e) {
             throw $this->createNotFoundException($e->getMessage(), $e);
         }
 
         return $this->render('room/room.html.twig', [
             'room' => $room,
-            'comments' => $room->getComments()->toArray(),
         ]);
     }
 }

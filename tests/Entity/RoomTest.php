@@ -14,27 +14,31 @@ class RoomTest extends TestCase
         $name = 'This is test';
         $image = 'image.jpg';
         $description = 'room';
-        $peopleAndTimeInfo = '2-4|60';
+        $peopleCount = '2-4';
+        $timeCount = 60;
 
-        $room = new Room($name, $image, $description, $peopleAndTimeInfo);
+        $room = new Room($name, $image, $description, $peopleCount, $timeCount);
 
         static::assertEquals($name, $room->getName());
         static::assertEquals($image, $room->getImage());
         static::assertEquals($description, $room->getDescription());
-        static::assertEquals($peopleAndTimeInfo, $room->getPeopleAndTimeInfo());
+        static::assertEquals($peopleCount, $room->getPeopleCount());
+        static::assertEquals($timeCount, $room->getTimeCount());
+        static::assertEquals(false, $room->isAvailable());
     }
 
-    public function testPublish(): void
+    public function testMakeAvailable(): void
     {
         $name = 'This is test';
         $image = 'image.jpg';
         $description = 'room';
-        $peopleAndTimeInfo = '2-4|60';
+        $peopleCount = '2-4';
+        $timeCount = 60;
 
-        $room = new Room($name, $image, $description, $peopleAndTimeInfo);
+        $room = new Room($name, $image, $description, $peopleCount, $timeCount);
 
         $room->makeAvailable();
 
-        static::assertEquals(true, $room->isAvailable());
+        static::assertTrue($room->isAvailable());
     }
 }

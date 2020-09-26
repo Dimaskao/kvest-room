@@ -33,13 +33,13 @@ class Comment
      * @ORM\ManyToOne(targetEntity=Room::class, inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $room;
+    private ?Room $room;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private User $user;
 
     public function __construct(string $text, $room, $user)
     {
@@ -66,16 +66,9 @@ class Comment
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
     }
 
     public function getRoom(): ?Room
@@ -95,10 +88,23 @@ class Comment
         return $this->user;
     }
 
-    public function setUser(?User $user): self
+    public function setUser(User $user): self
     {
         $this->user = $user;
 
         return $this;
+    }
+
+    public function canBeRemovedBy($user): bool
+    {
+        if ($this->user === $user) {
+            return true;
+        }
+
+        if ($user->getRoles()[0] === 'ROLE_ADMIN') {
+            return true;
+        }
+
+        return false;
     }
 }

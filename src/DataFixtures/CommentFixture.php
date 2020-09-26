@@ -61,7 +61,7 @@ final class CommentFixture extends AbstractFixture implements DependentFixtureIn
         return $this->getReference('user_'.$key);
     }
 
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             RoomFixture::class,
