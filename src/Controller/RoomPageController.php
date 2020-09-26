@@ -37,7 +37,6 @@ final class RoomPageController extends AbstractController
 
         return $this->render('room/room.html.twig', [
             'room' => $room,
-            'comments' => $room->getComments()->toArray(),
         ]);
     }
 }
