@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Collection\RoomList;
-use App\DTO\RoomDTO;
 use App\Repository\RoomRepository;
 
 /**

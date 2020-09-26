@@ -105,12 +105,13 @@ class Room
         $roomDTO = new RoomDTO(
             $this->id,
             $this->name,
-            $this->image
+            $this->image,
         );
         $roomDTO->setDescription($this->description);
         $roomDTO->setPeopleCount($this->peopleCount);
         $roomDTO->setTimeCount($this->timeCount);
         $roomDTO->setComments($this->comments);
+        $roomDTO->setSlug($this->slug);
 
         return $roomDTO;
     }

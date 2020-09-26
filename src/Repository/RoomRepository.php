@@ -25,7 +25,7 @@ final class RoomRepository extends ServiceEntityRepository
     public function getRoomList(): array
     {
         $query = $this->createQueryBuilder('r')
-            ->select('r.id', 'r.name', 'r.image')
+            ->select('r.id', 'r.name', 'r.image', 'r.slug')
             ->where('r.available = true')
             ->orderBy('r.id', 'DESC')
             ->getQuery();
@@ -33,18 +33,19 @@ final class RoomRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function getRoomFromDB(int $id): Room
+    public function getRoomFromDB($field): Room
     {
         $query = $this->createQueryBuilder('r')
-            ->where('r.id = :id')
+            ->where('r.slug = :field')
+            ->orWhere('r.id = :field')
             ->andWhere('r.available = true')
-            ->setParameter('id', $id)
+            ->setParameter('field', $field)
             ->getQuery();
 
         $room = $query->getOneOrNullResult();
 
         if (null === $room) {
-            throw new EntityNotFoundException('Room', $id);
+            throw new EntityNotFoundException('Room', $field);
         }
 
         return $room;

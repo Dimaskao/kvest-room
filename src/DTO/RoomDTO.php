@@ -17,6 +17,7 @@ final class RoomDTO
     private ?string $description = null;
     private ?string $peopleCount = null;
     private ?int $timeCount = null;
+    private ?string $slug = null;
     private $comments;
 
     public function __construct(int $id, string $name, string $image)
@@ -50,6 +51,7 @@ final class RoomDTO
     {
         return $this->peopleCount ?? null;
     }
+
     public function getTimeCount(): ?int
     {
         return $this->timeCount ?? null;
@@ -78,5 +80,15 @@ final class RoomDTO
     public function setComments($comments): void
     {
         $this->comments = $comments;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
     }
 }
