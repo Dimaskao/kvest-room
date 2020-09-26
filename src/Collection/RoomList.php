@@ -11,9 +11,9 @@ namespace App\Collection;
  */
 final class RoomList
 {
-    private array $roomList;
+    private ?array $roomList;
 
-    public function __construct(array $roomList)
+    public function __construct(?array $roomList = [])
     {
         $this->roomList = $roomList;
     }
@@ -21,6 +21,11 @@ final class RoomList
     public function getRoomList(): array
     {
         return $this->roomList;
+    }
+
+    public function addRoom($room): void
+    {
+        $this->roomList[] = $room;
     }
 
     public function getIterator(): iterable
