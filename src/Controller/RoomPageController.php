@@ -30,7 +30,7 @@ final class RoomPageController extends AbstractController
     public function getRoomById(int $id): Response
     {
         try {
-            $room = $this->roomProvider->getRoomByIdFromDB($id);
+            $room = $this->roomProvider->getRoomById($id);
         } catch (EntityNotFoundException $e) {
             throw $this->createNotFoundException($e->getMessage(), $e);
         }
