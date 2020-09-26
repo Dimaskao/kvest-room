@@ -94,4 +94,17 @@ class Comment
 
         return $this;
     }
+
+    public function canBeRemovedBy($user): bool
+    {
+        if ($this->user === $user) {
+            return true;
+        }
+
+        if ($user->getRoles()[0] === 'ROLE_ADMIN') {
+            return true;
+        }
+
+        return false;
+    }
 }

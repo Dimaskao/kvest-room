@@ -55,7 +55,7 @@ final class CommentsController extends AbstractController
     public function removeComment(int $commentId): RedirectResponse
     {
         $comment = $this->commentRepository->find($commentId);
-        if ($comment->getUser()->getId() != $this->getUser()->getId() && 'ROLE_ADMIN' !== $this->getUser()->getRoles()[0]) {
+        if (!$comment->canBeRemovedBy($this->getUser())) {
             return $this->redirectToRoute('app_home');
         }
 
