@@ -63,27 +63,27 @@ class Room
         $this->comments = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function getImage(): ?string
+    public function getImage(): string
     {
         return $this->image;
     }
 
-    public function getDescription(): ?string
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    public function getPeopleAndTimeInfo(): ?string
+    public function getPeopleAndTimeInfo(): string
     {
         return $this->peopleAndTimeInfo;
     }
@@ -93,7 +93,7 @@ class Room
         return $this->available;
     }
 
-    public function getRoom()
+    public function getRoom(): RoomDTO
     {
         $roomDTO = new RoomDTO(
             $this->id,

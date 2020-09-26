@@ -33,7 +33,7 @@ final class RoomRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function getRoomFromDB($id): Room
+    public function getRoomFromDB(int $id): Room
     {
         $query = $this->createQueryBuilder('r')
             ->where('r.id = :id')

@@ -31,7 +31,7 @@ final class CommentService implements CommentServiceInterface
         $this->security = $security;
     }
 
-    public function saveComment($roomId, $text): void
+    public function saveComment(int $roomId, string $text): void
     {
         $room = $this->roomRepository->find($roomId);
         $user = $this->security->getUser();
@@ -50,7 +50,7 @@ final class CommentService implements CommentServiceInterface
         $this->em->flush();
     }
 
-    public function removeComment($comment): void
+    public function removeComment(Comment $comment): void
     {
         $this->em->remove($comment);
         $this->em->flush();

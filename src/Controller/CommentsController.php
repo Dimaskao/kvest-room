@@ -42,7 +42,7 @@ final class CommentsController extends AbstractController
         $roomId = $request->get('roomId');
         $text = $request->get('text');
         try {
-            $this->commentService->saveComment($roomId, $text);
+            $this->commentService->saveComment((int)$roomId, $text);
         } catch (CommentCannotBeEmptyException $e) {
             return $this->redirect('/room/'.$roomId);
         }

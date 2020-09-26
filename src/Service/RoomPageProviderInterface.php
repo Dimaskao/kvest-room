@@ -6,5 +6,5 @@ namespace App\Service;
 
 interface RoomPageProviderInterface
 {
-    public function getRoomByIdFromDB($id);
+    public function getRoomByIdFromDB(int $id);
 }

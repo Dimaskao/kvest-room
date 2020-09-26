@@ -9,6 +9,7 @@ use App\Entity\Room;
 use App\Repository\RoomRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * This class get data for admin page.
@@ -29,7 +30,7 @@ final class AdminService implements AdminServiceInterface
         $this->parameters = $parameters;
     }
 
-    public function getRooms($id = null)
+    public function getRooms(?int $id = null)
     {
         if (null === $id) {
             $rooms = $this->roomRepository->findAll();
@@ -40,7 +41,7 @@ final class AdminService implements AdminServiceInterface
         return $this->roomRepository->find($id);
     }
 
-    public function editRoom(string $roomId, string $name, $photo, string $description, $isAvailable, string $peopleAndTimeInfo): void
+    public function editRoom(int $roomId, string $name, ?UploadedFile $photo, string $description, bool $isAvailable, string $peopleAndTimeInfo): void
     {
         $room = $this->roomRepository->find($roomId);
         $room->addName($name);
@@ -63,7 +64,7 @@ final class AdminService implements AdminServiceInterface
         $this->em->flush();
     }
 
-    public function addRoom(string $fileName, $photo, string $name, string $description, string $peopleAndTimeInfo, $isAvailable): void
+    public function addRoom(string $fileName, UploadedFile $photo, string $name, string $description, string $peopleAndTimeInfo, bool $isAvailable): void
     {
         $path = $this->parameters->get('app.save_photo_path');
         $photo->move($path, $fileName);

@@ -27,7 +27,7 @@ final class RoomPageController extends AbstractController
     /**
      * @Route("/room/{id}", requirements={"id"="\d+"}, methods={"GET"}, name="app_room")
      */
-    public function getRoomById($id): Response
+    public function getRoomById(int $id): Response
     {
         try {
             $room = $this->roomProvider->getRoomByIdFromDB($id);

@@ -43,7 +43,7 @@ final class UserFixture extends AbstractFixture
         $manager->flush();
     }
 
-    private function createUser($i): User
+    private function createUser(int $i): User
     {
         $user = new User(
             $i.'@mail',
