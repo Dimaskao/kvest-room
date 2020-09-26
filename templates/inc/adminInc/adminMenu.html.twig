@@ -9,5 +9,6 @@
         {% endfor %}
     </select>
     <br>
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('menu') }}"/>
     <button type="submit" name="edit" value="edit!">Редагуваты</button>
 </form>

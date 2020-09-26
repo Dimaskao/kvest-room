@@ -14,6 +14,7 @@
                 <div calss="upload_foto">
                     Змінити аватарку
                     <form action="{{ path('app_profile_save_image') }}" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('savePhoto') }}"/>
                         <input class="file" type="file" name="photo">
                         <input class="go_file" type="submit" value="Змінити">
                     </form>
@@ -32,6 +33,7 @@
                 {% endif %}
                 <div calss="logout">
                     <form action="{{ path('app_logout') }}" method="POST">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('logout') }}"/>
                         <input type="submit" value="Вийти">
                     </form>
                 </div>
