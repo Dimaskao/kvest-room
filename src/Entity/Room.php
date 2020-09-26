@@ -39,11 +39,6 @@ class Room
     private string $description;
 
     /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private string $peopleAndTimeInfo;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private bool $available = false;
@@ -54,12 +49,23 @@ class Room
      */
     private $comments;
 
-    public function __construct(string $name, string $image, string $description, string $peopleAndTimeInfo)
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private string $peopleCount;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private int $timeCount;
+
+    public function __construct(string $name, string $image, string $description, string $peopleCount, int $timeCount)
     {
         $this->name = $name;
         $this->image = $image;
         $this->description = $description;
-        $this->peopleAndTimeInfo = $peopleAndTimeInfo;
+        $this->peopleCount = $peopleCount;
+        $this->timeCount = $timeCount;
         $this->comments = new ArrayCollection();
     }
 
@@ -83,11 +89,6 @@ class Room
         return $this->description;
     }
 
-    public function getPeopleAndTimeInfo(): string
-    {
-        return $this->peopleAndTimeInfo;
-    }
-
     public function isAvailable(): bool
     {
         return $this->available;
@@ -101,7 +102,8 @@ class Room
             $this->image
         );
         $roomDTO->setDescription($this->description);
-        $roomDTO->setPeopleAndTimeInfo($this->peopleAndTimeInfo);
+        $roomDTO->setPeopleCount($this->peopleCount);
+        $roomDTO->setTimeCount($this->timeCount);
         $roomDTO->setComments($this->comments);
 
         return $roomDTO;
@@ -163,8 +165,37 @@ class Room
         $this->description = $description;
     }
 
-    public function addPeopleAndTimeInfo(string $peopleAndTimeInfo): void
+    public function addPeopleCount(string $peopleCount): void
     {
-        $this->peopleAndTimeInfo = $peopleAndTimeInfo;
+        $this->peopleCount = $peopleCount;
+    }
+
+    public function addTimeCount(int $timeCount): void
+    {
+        $this->timeCount = $timeCount;
+    }
+
+    public function getPeopleCount(): ?string
+    {
+        return $this->peopleCount;
+    }
+
+    public function setPeopleCount(string $peopleCount): self
+    {
+        $this->peopleCount = $peopleCount;
+
+        return $this;
+    }
+
+    public function getTimeCount(): ?int
+    {
+        return $this->timeCount;
+    }
+
+    public function setTimeCount(int $timeCount): self
+    {
+        $this->timeCount = $timeCount;
+
+        return $this;
     }
 }

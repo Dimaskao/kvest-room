@@ -49,9 +49,10 @@ class AdminController extends AbstractController
             $photo = $request->files->get('photo');
             $description = $request->get('description');
             $isAvailable = $request->get('available');
-            $peopleAndTimeInfo = $request->get('peopleAndTimeInfo');
+            $peopleCount = $request->get('peopleCount');
+            $timeCount = $request->get('timeCount');
 
-            $this->adminService->editRoom((int)$roomId, $name, $photo, $description, (bool)$isAvailable, $peopleAndTimeInfo);
+            $this->adminService->editRoom((int)$roomId, $name, $photo, $description, (bool)$isAvailable, $peopleCount, (int)$timeCount);
 
             return $this->redirectToRoute('app_admin');
         }
@@ -73,9 +74,10 @@ class AdminController extends AbstractController
             $name = $request->get('name');
             $description = $request->get('description');
             $isAvailable = $request->get('available');
-            $peopleAndTimeInfo = $request->get('peopleAndTimeInfo');
+            $peopleCount = $request->get('peopleCount');
+            $timeCount = $request->get('timeCount');
 
-            $this->adminService->addRoom($fileName, $photo, $name, $description, $peopleAndTimeInfo, (bool)$isAvailable);
+            $this->adminService->addRoom($fileName, $photo, $name, $description, (bool)$isAvailable, $peopleCount, (int)$timeCount);
 
             return $this->redirectToRoute('app_admin');
         }

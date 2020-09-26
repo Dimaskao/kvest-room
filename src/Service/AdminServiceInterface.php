@@ -10,7 +10,7 @@ interface AdminServiceInterface
 {
     public function getRooms(?int $id = null);
 
-    public function editRoom(int $roomId, string $name, ?UploadedFile $photo, string $description, bool $isAvailable, string $peopleAndTimeInfo);
+    public function editRoom(int $roomId, string $name, ?UploadedFile $photo, string $description, bool $isAvailable, string $peopleCount, int $timeCount);
 
-    public function addRoom(string $fileName, UploadedFile $photo, string $name, string $description, string $peopleAndTimeInfo, bool $isAvailable);
+    public function addRoom(string $fileName, UploadedFile $photo, string $name, string $description, bool $isAvailable, string $peopleCount, int $timeCount);
 }

@@ -15,7 +15,8 @@ final class RoomDTO
     private string $name;
     private string $image;
     private ?string $description = null;
-    private ?string $peopleAndTimeInfo = null;
+    private ?string $peopleCount = null;
+    private ?int $timeCount = null;
     private $comments;
 
     public function __construct(int $id, string $name, string $image)
@@ -45,9 +46,13 @@ final class RoomDTO
         return $this->description ?? null;
     }
 
-    public function getPeopleAndTimeInfo(): ?array
+    public function getPeopleCount(): ?string
     {
-        return \explode('|', $this->peopleAndTimeInfo) ?? null;
+        return $this->peopleCount ?? null;
+    }
+    public function getTimeCount(): ?int
+    {
+        return $this->timeCount ?? null;
     }
 
     public function setDescription(?string $description): void
@@ -55,9 +60,14 @@ final class RoomDTO
         $this->description = $description;
     }
 
-    public function setPeopleAndTimeInfo(?string $peopleAndTimeInfo): void
+    public function setPeopleCount(?string $peopleCount): void
     {
-        $this->peopleAndTimeInfo = $peopleAndTimeInfo;
+        $this->peopleCount = $peopleCount;
+    }
+
+    public function setTimeCount(?int $timeCount): void
+    {
+        $this->timeCount = $timeCount;
     }
 
     public function getComments()

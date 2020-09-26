@@ -41,7 +41,7 @@ final class AdminService implements AdminServiceInterface
         return $this->roomRepository->find($id);
     }
 
-    public function editRoom(int $roomId, string $name, ?UploadedFile $photo, string $description, bool $isAvailable, string $peopleAndTimeInfo): void
+    public function editRoom(int $roomId, string $name, ?UploadedFile $photo, string $description, bool $isAvailable, string $peopleCount, int $timeCount): void
     {
         $room = $this->roomRepository->find($roomId);
         $room->addName($name);
@@ -58,13 +58,14 @@ final class AdminService implements AdminServiceInterface
         } else {
             $room->makeNotAvailable();
         }
-        $room->addPeopleAndTimeInfo($peopleAndTimeInfo);
+        $room->addTimeCount($timeCount);
+        $room->addPeopleCount($peopleCount);
 
         $this->em->persist($room);
         $this->em->flush();
     }
 
-    public function addRoom(string $fileName, UploadedFile $photo, string $name, string $description, string $peopleAndTimeInfo, bool $isAvailable): void
+    public function addRoom(string $fileName, UploadedFile $photo, string $name, string $description, bool $isAvailable, string $peopleCount, int $timeCount): void
     {
         $path = $this->parameters->get('app.save_photo_path');
         $photo->move($path, $fileName);
@@ -77,7 +78,8 @@ final class AdminService implements AdminServiceInterface
             $name,
             $image,
             $description,
-            $peopleAndTimeInfo,
+            $peopleCount,
+            $timeCount,
         );
         if ($isAvailable) {
             $room->makeAvailable();
