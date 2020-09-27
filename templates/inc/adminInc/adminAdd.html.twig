@@ -1,0 +1,33 @@
+<form action="{{ path('app_admin_add') }}" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="room">
+    <div class="field-block">
+        <label for="roomName">Назва: </label>
+        <input name="name" required id="roomName"/>
+    </div>
+    <div class="field-block">
+        <label for="roomName"> Фото: </label>
+        <input class="file" type="file" name="photo" required>
+    </div>
+    <div class="field-block">
+        <label for="roomDescription">Опис: </label>
+        <textarea required id="roomDescription" name="description"></textarea>
+    </div>
+    <div class="field-block">
+        <label for="peopleCount">
+            Кількість людей від - до<br>
+            Приклад: 2-4
+        </label>
+        <input id="peopleCount" required name="peopleCount"/><br>
+        <label for="timeCount">
+            Час у хв. <br>
+            Приклад: 45
+        </label>
+        <input id="timeCount" required name="timeCount"/>
+    </div>
+    <div class="field-block">
+        <span class="check-text">Зробити доступною</span>
+        <input id="check" name="available" value="1" type="radio"> так
+        <input id="check" name="available" value="0" checked type="radio"> ні
+    </div>
+    <button type="submit" name="confirm_add" value="confirm_edit!">Підтвердити</button>
+</form>

@@ -1,0 +1,46 @@
+<div class="coments_wrapper">
+    <div class="coment">
+        <h3 id="dell" class="form-h2_2">Коментарі</h3>
+    </div>
+    {% for comment in room.comments %}
+        <div class="coment">
+            <div style="display: flex; justify-content: space-between;">
+                <h3 class="foto_h3">
+                    <img class="coment_foto" src="{{ asset(comment.user.image) }}">
+                    {{ comment.user.name }}
+                </h3>
+                <div>{{ comment.createdAt | date('d-m-Y')}}</div>
+            </div>
+            <div>
+                {% if app.user %}
+                    {% if app.user.id == comment.user.id or is_granted('ROLE_ADMIN') %}
+                    <a href='{{ path('app_remove_comment', {commentId: comment.id} ) }}'><img src='{{ asset('images/basket.png') }}' class='basket'></a>
+                    {% endif %}
+                {% endif %}
+                <span class="coment_text">{{ comment.text }}</span>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+<div class="forms">
+    {% if app.user %}
+    <div class="form3">
+        <div class="coments_form">
+            <h2 class="form-h2">Додати коментар</h2>
+            <form action="{{ path('app_save_comment') }}" method="POST" id="tut">
+                <textarea name="text" placeholder="Текст коментаря..." required></textarea></br>
+                <input type="hidden" name="roomSlug" value="{{ room.slug }}">
+                <input type="hidden" name="roomId" value="{{ room.id }}">
+                <button class="button3" name="go_comment" type="submit">Опублікувати</button>
+            </form>
+        </div>
+    </div>
+    {% else %}
+    <div class="form3">
+        <div class="coments_form">
+            <h2 class="form-h2_2">Додати коментар</h2>
+            <a href="{{ path('app_login') }}"><button class="button3" name="login" type="submit">Увійдвть або зарееструйтесь щоб додати коментар</button></a>
+        </div>
+    </div>
+    {% endif %}
+</div>

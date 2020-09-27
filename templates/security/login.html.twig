@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block main %}
+    <div class="form_register_wrapper">
+        <div class="form_register">
+            <h2 id="form-h2_2">Вхід</h2>
+            <form method="post">
+                {% if error %}
+                    <div class="">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+
+                {% if app.user %}
+                    <div class="">
+                        You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                {% endif %}
+                <div class="field-block">
+                    <label for="inputEmail">E-mail:</label>
+                    <input type="email" id="inputEmail" class="field" name="email" value="{{ last_username }}" required autofocus>
+                </div>
+
+                <div class="field-block">
+                    <label for="inputPassword">Пароль:</label>
+                    <input type="password" id="inputPassword" class="field" name="password" required>
+                </div>
+
+                <button class="button" type="submit">Увійти</button>
+                <div class="register" style="float: right">
+                    <a href="{{ path('app_register') }}" style="text-decoration: none; text-decoration: none; color: #989898; font-size: 13pt; opacity: 0.5;">Реестрація</a>
+                </div>
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+            </form>
+
+        </div>
+    </div>
+
+    {#
+        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+        See https://symfony.com/doc/current/security/remember_me.html
+
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" name="_remember_me"> Remember me
+            </label>
+        </div>
+    #}
+{% endblock %}
