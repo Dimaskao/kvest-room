@@ -43,7 +43,7 @@ final class RoomFixture extends AbstractFixture
         return new Room(
             $name,
             $this->faker->imageUrl(),
-            $this->faker->text,
+            $this->faker->sentences(8, true),
             self::PEOPLE_COUNT,
             self::TIME_COUNT,
         );

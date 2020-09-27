@@ -6,5 +6,5 @@ namespace App\Service;
 
 interface RoomPageProviderInterface
 {
-    public function getRoomBySlug($slug);
+    public function getRoomByField($slug);
 }

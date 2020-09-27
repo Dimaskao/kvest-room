@@ -21,7 +21,7 @@ final class RoomPageProvider implements RoomPageProviderInterface
         $this->roomRepository = $roomRepository;
     }
 
-    public function getRoomBySlug($field): RoomDTO
+    public function getRoomByField($field): RoomDTO
     {
         $room = $this->roomRepository->getRoomFromDB($field);
 

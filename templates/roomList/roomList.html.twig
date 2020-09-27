@@ -16,7 +16,7 @@
                     <div class="kvestroom">{{ room.name }}</div>
                     <a href="{{ path('app_room', { field: room.slug}) }}">
                         <section class="img">
-                            <img src="{{ room.image }}">
+                            <img src="{{ asset(room.image) }}">
                         </section>
                     </a>
                 </div>

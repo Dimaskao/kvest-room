@@ -26,12 +26,13 @@ final class RoomPageController extends AbstractController
 
     /**
      * @Route("/room/{field}", requirements={"field": "^[a-z0-9]+(?:-[a-z0-9]+)*$"}, methods={"GET"}, name="app_room")
+     *
      * @param string|int $field
      */
-    public function getRoomById($field): Response
+    public function getRoomByField($field): Response
     {
         try {
-            $room = $this->roomProvider->getRoomBySlug($field);
+            $room = $this->roomProvider->getRoomByField($field);
         } catch (EntityNotFoundException $e) {
             throw $this->createNotFoundException($e->getMessage(), $e);
         }
