@@ -45,7 +45,7 @@ final class RoomRepository extends ServiceEntityRepository
         $room = $query->getOneOrNullResult();
 
         if (null === $room) {
-            throw new EntityNotFoundException('Room', $field);
+            throw new EntityNotFoundException($field);
         }
 
         return $room;

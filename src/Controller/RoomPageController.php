@@ -25,7 +25,7 @@ final class RoomPageController extends AbstractController
     }
 
     /**
-     * @Route("/room/{field}", requirements={"field": "^[a-z0-9]+(?:-[a-z0-9]+)*$"}, methods={"GET"}, name="app_room")
+     * @Route("/room/{field}", methods={"GET"}, name="app_room")
      *
      * @param string|int $field
      */

@@ -6,9 +6,9 @@ namespace App\Exception;
 
 class EntityNotFoundException extends \RuntimeException
 {
-    public function __construct(string $entityName, mixed $id)
+    public function __construct($field)
     {
-        $message = \sprintf('Entity "%s" with ID %d not found.', $entityName, $id);
+        $message = \sprintf('Room "%s" not found.',$field);
 
         parent::__construct($message);
     }
