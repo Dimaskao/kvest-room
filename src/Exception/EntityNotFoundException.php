@@ -8,7 +8,7 @@ class EntityNotFoundException extends \RuntimeException
 {
     public function __construct($field)
     {
-        $message = \sprintf('Room "%s" not found.',$field);
+        $message = \sprintf('Room "%s" not found.', $field);
 
         parent::__construct($message);
     }
