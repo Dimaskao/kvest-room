@@ -26,8 +26,9 @@ final class RoomPageController extends AbstractController
 
     /**
      * @Route("/room/{field}", requirements={"field": "^[a-z0-9]+(?:-[a-z0-9]+)*$"}, methods={"GET"}, name="app_room")
+     * @param string|int $field
      */
-    public function getRoomById($field): Response//TODO: уточнить насчет mixed
+    public function getRoomById($field): Response
     {
         try {
             $room = $this->roomProvider->getRoomBySlug($field);
